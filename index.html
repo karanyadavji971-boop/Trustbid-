@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>ACCC SHOP - Buy & Sell Social Media Accounts</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f172a, #1e1b4b);
+            min-height: 100vh;
+            padding: 30px 20px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 48px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 2px;
+        }
+
+        .header h1 span {
+            font-size: 24px;
+            background: none;
+            -webkit-text-fill-color: #94a3b8;
+        }
+
+        .header p {
+            color: #94a3b8;
+            margin-top: 10px;
+        }
+
+        /* Buttons */
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 18px 50px;
+            font-size: 24px;
+            font-weight: bold;
+            border: none;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .btn-buy {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+        }
+
+        .btn-sell {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        /* Form Container */
+        .form-container {
+            background: white;
+            border-radius: 28px;
+            padding: 30px;
+            max-width: 550px;
+            margin: 0 auto;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .form-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #1e293b;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #334155;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #cbd5e1;
+            border-radius: 12px;
+            font-size: 15px;
+        }
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #f59e0b;
+        }
+
+        .commission-box {
+            background: #fef9c3;
+            padding: 12px;
+            border-radius: 12px;
+            text-align: center;
+            margin: 15px 0;
+            font-weight: bold;
+            color: #854d0e;
+        }
+
+        .submit-btn {
+            background: #4f46e5;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 40px;
+            font-size: 18px;
+            font-weight: bold;
+            width: 100%;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: #4338ca;
+        }
+
+        .close-form {
+            text-align: right;
+            margin-bottom: 10px;
+            cursor: pointer;
+            font-size: 24px;
+            color: #64748b;
+        }
+
+        /* Disclaimer */
+        .disclaimer {
+            background: #1e293b;
+            border-radius: 20px;
+            padding: 20px;
+            margin-top: 50px;
+            text-align: center;
+            border-left: 4px solid #fbbf24;
+        }
+
+        .disclaimer p {
+            color: #94a3b8;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #64748b;
+            font-size: 12px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>ACCC<span>.</span>SHOP</h1>
+            <p>Safe & Secure Marketplace | 100% Trust | Middleman Protection</p>
+        </div>
+
+        <div class="buttons">
+            <button class="btn btn-buy" onclick="showForm('buy')">🛒 BUY ACCOUNT</button>
+            <button class="btn btn-sell" onclick="showForm('sell')">💰 SELL ACCOUNT</button>
+        </div>
+
+        <!-- Buy Form -->
+        <div id="buyForm" class="form-container">
+            <div class="close-form" onclick="closeAllForms()">✕</div>
+            <h2>📥 BUY ACCOUNT</h2>
+            <form id="buyFormElement">
+                <div class="form-group">
+                    <label>Account Name / Username *</label>
+                    <input type="text" id="buyAccountName" required placeholder="e.g., @travel_insta">
+                </div>
+                <div class="form-group">
+                    <label>Platform *</label>
+                    <select id="buyPlatform">
+                        <option>Instagram</option><option>YouTube</option><option>TikTok</option>
+                        <option>Facebook</option><option>Twitter/X</option><option>Telegram</option>
+                        <option>PUBG</option><option>Free Fire</option><option>Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Followers / Subscribers *</label>
+                    <input type="text" id="buyFollowers" placeholder="e.g., 50K">
+                </div>
+                <div class="form-group">
+                    <label>Your Name *</label>
+                    <input type="text" id="buyerName" required>
+                </div>
+                <div class="form-group">
+                    <label>Your Phone Number *</label>
+                    <input type="tel" id="buyerPhone" required>
+                </div>
+                <div class="form-group">
+                    <label>Your Email *</label>
+                    <input type="email" id="buyerEmail" required>
+                </div>
+                <div class="form-group">
+                    <label>Offered Price (USD) *</label>
+                    <input type="number" id="buyPrice" required placeholder="e.g., 100">
+                </div>
+                <div class="commission-box">
+                    🔒 10% commission goes to ACCC.SHOP (middleman escrow service)
+                </div>
+                <button type="button" class="submit-btn" onclick="submitBuyRequest()">📞 SEND REQUEST</button>
+            </form>
+        </div>
+
+        <!-- Sell Form -->
+        <div id="sellForm" class="form-container">
+            <div class="close-form" onclick="closeAllForms()">✕</div>
+            <h2>📤 SELL ACCOUNT</h2>
+            <form id="sellFormElement">
+                <div class="form-group">
+                    <label>Account Name / Username *</label>
+                    <input type="text" id="sellAccountName" required placeholder="e.g., @travel_insta">
+                </div>
+                <div class="form-group">
+                    <label>Platform *</label>
+                    <select id="sellPlatform">
+                        <option>Instagram</option><option>YouTube</option><option>TikTok</option>
+                        <option>Facebook</option><option>Twitter/X</option><option>Telegram</option>
+                        <option>PUBG</option><option>Free Fire</option><option>Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Followers / Subscribers *</label>
+                    <input type="text" id="sellFollowers" placeholder="e.g., 50K">
+                </div>
+                <div class="form-group">
+                    <label>Your Name *</label>
+                    <input type="text" id="sellerName" required>
+                </div>
+                <div class="form-group">
+                    <label>Your Phone Number *</label>
+                    <input type="tel" id="sellerPhone" required>
+                </div>
+                <div class="form-group">
+                    <label>Your Email *</label>
+                    <input type="email" id="sellerEmail" required>
+                </div>
+                <div class="form-group">
+                    <label>Expected Price (USD) *</label>
+                    <input type="number" id="sellPrice" required placeholder="e.g., 100">
+                </div>
+                <div class="commission-box">
+                    🔒 10% commission goes to ACCC.SHOP (middleman escrow service)
+                </div>
+                <button type="button" class="submit-btn" onclick="submitSellRequest()">📞 SEND REQUEST</button>
+            </form>
+        </div>
+
+        <!-- Disclaimer -->
+        <div class="disclaimer">
+            <p>⚠️ <strong>LEGAL DISCLAIMER</strong><br>
+            ACCC.SHOP is a marketplace connecting buyers and sellers. We are NOT affiliated with Instagram, YouTube, Facebook, TikTok, or any other social media platform. Selling accounts may violate their Terms of Service. Buyers and sellers assume all risks. We do not guarantee account safety or transfer success. All transactions are between buyer and seller. We only facilitate as a middleman and take a 10% commission for secure escrow service.</p>
+            <p style="margin-top:10px;">🔒 <strong>How it works:</strong> Buyer pays → ACCC.SHOP holds money → Seller transfers account → Buyer confirms → ACCC.SHOP pays seller (minus 10% commission). Trust & Security Guaranteed.</p>
+        </div>
+
+        <div class="footer">
+            <p>© 2026 ACCC.SHOP | Buy & Sell Social Media Accounts Safely</p>
+        </div>
+    </div>
+
+    <script>
+        const ADMIN_WHATSAPP = "9458051202";
+
+        function showForm(type) {
+            closeAllForms();
+            if(type === 'buy') {
+                document.getElementById('buyForm').style.display = 'block';
+            } else {
+                document.getElementById('sellForm').style.display = 'block';
+            }
+            document.getElementById('buyForm').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function closeAllForms() {
+            document.getElementById('buyForm').style.display = 'none';
+            document.getElementById('sellForm').style.display = 'none';
+        }
+
+        function submitBuyRequest() {
+            const account = document.getElementById('buyAccountName').value.trim();
+            const platform = document.getElementById('buyPlatform').value;
+            const followers = document.getElementById('buyFollowers').value.trim();
+            const name = document.getElementById('buyerName').value.trim();
+            const phone = document.getElementById('buyerPhone').value.trim();
+            const email = document.getElementById('buyerEmail').value.trim();
+            const price = document.getElementById('buyPrice').value.trim();
+
+            if(!account || !name || !phone || !email || !price) {
+                alert("Please fill all required fields");
+                return;
+            }
+
+            const commission = (parseFloat(price) * 0.10).toFixed(2);
+            const sellerGets = (parseFloat(price) - commission).toFixed(2);
+
+            const message = `🔴 *NEW BUY REQUEST - ACCC.SHOP* 🔴
+━━━━━━━━━━━━━━━━━━━━
+📌 *ACCOUNT DETAILS*
+━━━━━━━━━━━━━━━━━━━━
+📱 Account: ${account}
+🎮 Platform: ${platform}
+👥 Followers: ${followers || "N/A"}
+💰 Offered Price: $${price}
+💸 Commission (10%): $${commission}
+✅ Seller Gets: $${sellerGets}
+
+━━━━━━━━━━━━━━━━━━━━
+👤 *BUYER DETAILS*
+━━━━━━━━━━━━━━━━━━━━
+Name: ${name}
+Phone: ${phone}
+Email: ${email}
+
+━━━━━━━━━━━━━━━━━━━━
+⏰ Time: ${new Date().toLocaleString()}
+👉 Please connect buyer with a seller who has this account
+👉 Money will be held in escrow until account transfer confirmed`;
+
+            const encodedMsg = encodeURIComponent(message);
+            window.open(`https://wa.me/91${ADMIN_WHATSAPP}?text=${encodedMsg}`, '_blank');
+            alert("✅ Request sent to ACCC.SHOP admin! WhatsApp will open automatically.\n\nAdmin will help you find a seller. You will be contacted shortly.");
+            closeAllForms();
+            clearBuyForm();
+        }
+
+        function submitSellRequest() {
+            const account = document.getElementById('sellAccountName').value.trim();
+            const platform = document.getElementById('sellPlatform').value;
+            const followers = document.getElementById('sellFollowers').value.trim();
+            const name = document.getElementById('sellerName').value.trim();
+            const phone = document.getElementById('sellerPhone').value.trim();
+            const email = document.getElementById('sellerEmail').value.trim();
+            const price = document.getElementById('sellPrice').value.trim();
+
+            if(!account || !name || !phone || !email || !price) {
+                alert("Please fill all required fields");
+                return;
+            }
+
+            const commission = (parseFloat(price) * 0.10).toFixed(2);
+            const sellerGets = (parseFloat(price) - commission).toFixed(2);
+
+            const message = `🟢 *NEW SELL REQUEST - ACCC.SHOP* 🟢
+━━━━━━━━━━━━━━━━━━━━
+📌 *ACCOUNT DETAILS*
+━━━━━━━━━━━━━━━━━━━━
+📱 Account: ${account}
+🎮 Platform: ${platform}
+👥 Followers: ${followers || "N/A"}
+💰 Expected Price: $${price}
+💸 Commission (10%): $${commission}
+✅ Seller Gets: $${sellerGets}
+
+━━━━━━━━━━━━━━━━━━━━
+👤 *SELLER DETAILS*
+━━━━━━━━━━━━━━━━━━━━
+Name: ${name}
+Phone: ${phone}
+Email: ${email}
+
+━━━━━━━━━━━━━━━━━━━━
+⏰ Time: ${new Date().toLocaleString()}
+👉 Please connect this seller with interested buyers
+👉 Money will be held in escrow until account transfer confirmed`;
+
+            const encodedMsg = encodeURIComponent(message);
+            window.open(`https://wa.me/91${ADMIN_WHATSAPP}?text=${encodedMsg}`, '_blank');
+            alert("✅ Request sent to ACCC.SHOP admin! WhatsApp will open automatically.\n\nAdmin will help you find a buyer. You will be contacted shortly.");
+            closeAllForms();
+            clearSellForm();
+        }
+
+        function clearBuyForm() {
+            document.getElementById('buyAccountName').value = "";
+            document.getElementById('buyFollowers').value = "";
+            document.getElementById('buyerName').value = "";
+            document.getElementById('buyerPhone').value = "";
+            document.getElementById('buyerEmail').value = "";
+            document.getElementById('buyPrice').value = "";
+        }
+
+        function clearSellForm() {
+            document.getElementById('sellAccountName').value = "";
+            document.getElementById('sellFollowers').value = "";
+            document.getElementById('sellerName').value = "";
+            document.getElementById('sellerPhone').value = "";
+            document.getElementById('sellerEmail').value = "";
+            document.getElementById('sellPrice').value = "";
+        }
+    </script>
+</body>
+</html>
