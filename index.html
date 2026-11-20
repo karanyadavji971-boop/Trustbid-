@@ -159,6 +159,7 @@
                     <option value="2028">2028</option>
                     <option value="2029">2029</option>
                     <option value="2030">2030</option>
+                    <option value="2031">2031</option>
                 </select>
             </div>
             <button class="search-btn" onclick="searchFestival()">Search</button>
@@ -215,8 +216,9 @@
         'Christian': { primary: '#64748b', light: 'rgba(100, 116, 139, 0.2)' } 
     };
 
-    // ================= FESTIVAL DATABASE (From PDF) =================
+    // ================= FESTIVAL DATABASE (2025 to 2031) =================
     const defaultFestivals = [
+        // 2026
         { name: "New Year's Day", date: "2026-01-01", religion: "All", wish: "Happy New Year!" },
         { name: "Makar Sankranti", date: "2026-01-14", religion: "Hindu", wish: "Happy Makar Sankranti!" },
         { name: "Republic Day", date: "2026-01-26", religion: "All", wish: "Happy Republic Day!" },
@@ -236,6 +238,8 @@
         { name: "Diwali", date: "2026-11-08", religion: "Hindu", wish: "Happy Diwali!" },
         { name: "Guru Nanak Jayanti", date: "2026-11-24", religion: "Sikh", wish: "Happy Gurpurab!" },
         { name: "Christmas", date: "2026-12-25", religion: "Christian", wish: "Merry Christmas!" },
+
+        // 2027
         { name: "Republic Day", date: "2027-01-26", religion: "All", wish: "Happy Republic Day!" },
         { name: "Holi", date: "2027-03-22", religion: "Hindu", wish: "Happy Holi!" },
         { name: "Id-ul-Fitr", date: "2027-03-10", religion: "Muslim", wish: "Eid Mubarak!" },
@@ -252,7 +256,48 @@
         { name: "Dussehra", date: "2027-10-09", religion: "Hindu", wish: "Happy Dussehra!" },
         { name: "Diwali", date: "2027-10-29", religion: "Hindu", wish: "Happy Diwali!" },
         { name: "Guru Nanak Jayanti", date: "2027-11-14", religion: "Sikh", wish: "Happy Gurpurab!" },
-        { name: "Christmas", date: "2027-12-25", religion: "Christian", wish: "Merry Christmas!" }
+        { name: "Christmas", date: "2027-12-25", religion: "Christian", wish: "Merry Christmas!" },
+
+        // 2028 (Approximate dates for Lunar Festivals)
+        { name: "Republic Day", date: "2028-01-26", religion: "All", wish: "Happy Republic Day!" },
+        { name: "Holi", date: "2028-03-11", religion: "Hindu", wish: "Happy Holi!" },
+        { name: "Id-ul-Fitr", date: "2028-02-26", religion: "Muslim", wish: "Eid Mubarak!" },
+        { name: "Good Friday", date: "2028-04-14", religion: "Christian", wish: "Blessed Good Friday!" },
+        { name: "Ram Navami", date: "2028-04-03", religion: "Hindu", wish: "Jai Shri Ram!" },
+        { name: "Independence Day", date: "2028-08-15", religion: "All", wish: "Happy Independence Day!" },
+        { name: "Gandhi Jayanti", date: "2028-10-02", religion: "All", wish: "Happy Gandhi Jayanti!" },
+        { name: "Diwali", date: "2028-10-17", religion: "Hindu", wish: "Happy Diwali!" },
+        { name: "Christmas", date: "2028-12-25", religion: "Christian", wish: "Merry Christmas!" },
+
+        // 2029
+        { name: "Republic Day", date: "2029-01-26", religion: "All", wish: "Happy Republic Day!" },
+        { name: "Holi", date: "2029-02-28", religion: "Hindu", wish: "Happy Holi!" },
+        { name: "Id-ul-Fitr", date: "2029-02-14", religion: "Muslim", wish: "Eid Mubarak!" },
+        { name: "Good Friday", date: "2029-03-30", religion: "Christian", wish: "Blessed Good Friday!" },
+        { name: "Independence Day", date: "2029-08-15", religion: "All", wish: "Happy Independence Day!" },
+        { name: "Gandhi Jayanti", date: "2029-10-02", religion: "All", wish: "Happy Gandhi Jayanti!" },
+        { name: "Diwali", date: "2029-11-05", religion: "Hindu", wish: "Happy Diwali!" },
+        { name: "Christmas", date: "2029-12-25", religion: "Christian", wish: "Merry Christmas!" },
+
+        // 2030
+        { name: "Republic Day", date: "2030-01-26", religion: "All", wish: "Happy Republic Day!" },
+        { name: "Holi", date: "2030-03-20", religion: "Hindu", wish: "Happy Holi!" },
+        { name: "Id-ul-Fitr", date: "2030-02-04", religion: "Muslim", wish: "Eid Mubarak!" },
+        { name: "Good Friday", date: "2030-04-19", religion: "Christian", wish: "Blessed Good Friday!" },
+        { name: "Independence Day", date: "2030-08-15", religion: "All", wish: "Happy Independence Day!" },
+        { name: "Gandhi Jayanti", date: "2030-10-02", religion: "All", wish: "Happy Gandhi Jayanti!" },
+        { name: "Diwali", date: "2030-10-26", religion: "Hindu", wish: "Happy Diwali!" },
+        { name: "Christmas", date: "2030-12-25", religion: "Christian", wish: "Merry Christmas!" },
+
+        // 2031
+        { name: "Republic Day", date: "2031-01-26", religion: "All", wish: "Happy Republic Day!" },
+        { name: "Holi", date: "2031-03-09", religion: "Hindu", wish: "Happy Holi!" },
+        { name: "Id-ul-Fitr", date: "2031-01-24", religion: "Muslim", wish: "Eid Mubarak!" },
+        { name: "Good Friday", date: "2031-04-11", religion: "Christian", wish: "Blessed Good Friday!" },
+        { name: "Independence Day", date: "2031-08-15", religion: "All", wish: "Happy Independence Day!" },
+        { name: "Gandhi Jayanti", date: "2031-10-02", religion: "All", wish: "Happy Gandhi Jayanti!" },
+        { name: "Diwali", date: "2031-11-14", religion: "Hindu", wish: "Happy Diwali!" },
+        { name: "Christmas", date: "2031-12-25", religion: "Christian", wish: "Merry Christmas!" }
     ];
 
     // ================= AUTH & DATA LOADING =================
