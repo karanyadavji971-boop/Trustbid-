@@ -24,10 +24,11 @@
             background: linear-gradient(-45deg, #0f172a, #1e1b4b, #2e1065, #0f172a);
             background-size: 400% 400%;
             animation: gradientBG 15s ease infinite;
-            color: white; min-height: 100vh; padding: 15px; 
+            color: white; min-height: 100vh; 
+            display: flex; flex-direction: column;
         }
         
-        .container { max-width: 500px; margin: auto; }
+        .container { max-width: 500px; margin: auto; width: 100%; padding: 15px; flex: 1; display: flex; flex-direction: column; }
 
         /* Glassmorphism Cards */
         .glass-card {
@@ -43,7 +44,7 @@
         }
 
         /* Login & Setup */
-        #loginScreen, #setupScreen { display: none; flex-direction: column; justify-content: center; flex: 1; text-align: center; }
+        #loginScreen, #setupScreen { display: none; flex-direction: column; justify-content: center; align-items: center; flex: 1; text-align: center; }
         #mainScreen { display: none; }
         
         h1 { font-size: 32px; font-weight: 900; letter-spacing: -1px; margin-bottom: 20px; text-shadow: 0 0 20px rgba(255,255,255,0.3); }
@@ -66,7 +67,10 @@
         /* Header */
         .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding: 10px 5px; }
         .header h2 { font-size: 24px; font-weight: 800; }
-        .edit-btn { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; padding: 8px 15px; border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer; }
+        .header-actions { display: flex; gap: 8px; }
+        .edit-btn, .logout-btn { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; padding: 8px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer; transition: 0.2s; }
+        .logout-btn { background: #ef4444; border-color: #ef4444; }
+        .logout-btn:hover { background: #dc2626; }
 
         /* Search Box */
         .search-row { display: flex; gap: 10px; margin-bottom: 10px; }
@@ -98,7 +102,7 @@
     
     <!-- 1. LOGIN SCREEN -->
     <div id="loginScreen" style="display:flex;">
-        <div class="glass-card">
+        <div class="glass-card" style="width: 100%;">
             <h1>Unique Calendar</h1>
             <button class="google-btn" onclick="loginWithGoogle()">Sign in with Google</button>
         </div>
@@ -106,7 +110,7 @@
 
     <!-- 2. SETUP SCREEN -->
     <div id="setupScreen">
-        <div class="glass-card">
+        <div class="glass-card" style="width: 100%;">
             <h2 style="margin-bottom:15px;">Enter Your Details</h2>
             
             <div class="input-group">
@@ -136,8 +140,11 @@
     <!-- 3. MAIN CALENDAR APP -->
     <div id="mainScreen">
         <div class="header">
-            <h2 id="userNameDisplay">Unique Calendar</h2>
-            <button class="edit-btn" onclick="editProfile()">Edit Profile</button>
+            <h2 id="userNameDisplay">Name</h2>
+            <div class="header-actions">
+                <button class="edit-btn" onclick="editProfile()">Edit</button>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
         </div>
 
         <!-- SEARCH BOX -->
@@ -200,10 +207,16 @@
     let currentMonth = new Date().getMonth();
     let currentYear = new Date().getFullYear();
 
-    // ================= GOVERNMENT HOLIDAYS DATABASE (From PDF) =================
-    // This data is used if Firebase is empty. You can also add this to Firebase.
+    // ================= THEME COLORS =================
+    const themes = {
+        'Hindu': { primary: '#ea580c', light: 'rgba(234, 88, 12, 0.2)' }, 
+        'Muslim': { primary: '#16a34a', light: 'rgba(22, 163, 74, 0.2)' }, 
+        'Sikh': { primary: '#d97706', light: 'rgba(217, 119, 6, 0.2)' }, 
+        'Christian': { primary: '#64748b', light: 'rgba(100, 116, 139, 0.2)' } 
+    };
+
+    // ================= FESTIVAL DATABASE (From PDF) =================
     const defaultFestivals = [
-        // 2026
         { name: "New Year's Day", date: "2026-01-01", religion: "All", wish: "Happy New Year!" },
         { name: "Makar Sankranti", date: "2026-01-14", religion: "Hindu", wish: "Happy Makar Sankranti!" },
         { name: "Republic Day", date: "2026-01-26", religion: "All", wish: "Happy Republic Day!" },
@@ -223,8 +236,6 @@
         { name: "Diwali", date: "2026-11-08", religion: "Hindu", wish: "Happy Diwali!" },
         { name: "Guru Nanak Jayanti", date: "2026-11-24", religion: "Sikh", wish: "Happy Gurpurab!" },
         { name: "Christmas", date: "2026-12-25", religion: "Christian", wish: "Merry Christmas!" },
-        
-        // 2027
         { name: "Republic Day", date: "2027-01-26", religion: "All", wish: "Happy Republic Day!" },
         { name: "Holi", date: "2027-03-22", religion: "Hindu", wish: "Happy Holi!" },
         { name: "Id-ul-Fitr", date: "2027-03-10", religion: "Muslim", wish: "Eid Mubarak!" },
@@ -243,14 +254,6 @@
         { name: "Guru Nanak Jayanti", date: "2027-11-14", religion: "Sikh", wish: "Happy Gurpurab!" },
         { name: "Christmas", date: "2027-12-25", religion: "Christian", wish: "Merry Christmas!" }
     ];
-
-    const themes = {
-        'Hindu': { primary: '#f97316', light: 'rgba(249, 115, 22, 0.2)' }, 
-        'Muslim': { primary: '#22c55e', light: 'rgba(34, 197, 94, 0.2)' }, 
-        'Sikh': { primary: '#eab308', light: 'rgba(234, 179, 8, 0.2)' }, 
-        'Christian': { primary: '#94a3b8', light: 'rgba(148, 163, 184, 0.2)' },
-        'All': { primary: '#3b82f6', light: 'rgba(59, 130, 246, 0.2)' }
-    };
 
     // ================= AUTH & DATA LOADING =================
     auth.onAuthStateChanged(async (user) => {
@@ -282,7 +285,6 @@
             snapshot.forEach(doc => {
                 allFestivals.push(doc.data());
             });
-            // Agar Firebase empty hai, toh default data use karein
             if (allFestivals.length === 0) {
                 allFestivals = defaultFestivals;
             }
@@ -296,6 +298,12 @@
     window.loginWithGoogle = async function() {
         try { await auth.signInWithPopup(provider); } 
         catch (e) { alert("Login Failed: " + e.message); }
+    };
+
+    window.logout = function() {
+        if(confirm("Do you want to logout?")) {
+            auth.signOut();
+        }
     };
 
     window.selectSetupReligion = function(religion) {
@@ -338,11 +346,9 @@
         document.getElementById("setupScreen").style.display = "none";
         document.getElementById("mainScreen").style.display = "block";
 
-        // Update Name
-        document.getElementById("userNameDisplay").innerText = userData.name || "Unique Calendar";
+        document.getElementById("userNameDisplay").innerText = userData.name || "Name";
 
-        // Apply Theme
-        const theme = themes[userData.religion] || themes['All'];
+        const theme = themes[userData.religion] || themes['Hindu'];
         document.documentElement.style.setProperty('--primary', theme.primary);
         document.documentElement.style.setProperty('--primary-light', theme.light);
 
@@ -376,7 +382,6 @@
 
         let monthEvents = allFestivals.filter(f => {
             if(!f.date) return false;
-            // Show event if religion matches OR event is for "All"
             if(f.religion !== userData.religion && f.religion !== 'All') return false;
             let d = new Date(f.date);
             return d.getMonth() === currentMonth && d.getFullYear() === currentYear;
