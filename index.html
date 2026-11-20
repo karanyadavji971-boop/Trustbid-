@@ -14,7 +14,7 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
         
-        /* Animated Unique Background */
+        /* Animated Background */
         @keyframes gradientBG {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
@@ -30,7 +30,7 @@
         
         .container { max-width: 500px; margin: auto; width: 100%; padding: 15px; flex: 1; display: flex; flex-direction: column; }
 
-        /* Glassmorphism Cards */
+        /* Glassmorphism */
         .glass-card {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
@@ -47,35 +47,32 @@
         #loginScreen, #setupScreen { display: none; flex-direction: column; justify-content: center; align-items: center; flex: 1; text-align: center; }
         #mainScreen { display: none; }
         
-        h1 { font-size: 32px; font-weight: 900; letter-spacing: -1px; margin-bottom: 20px; text-shadow: 0 0 20px rgba(255,255,255,0.3); }
+        h1 { font-size: 32px; font-weight: 900; margin-bottom: 20px; }
         
-        .google-btn { display: flex; align-items: center; justify-content: center; background: white; border: none; padding: 15px; border-radius: 12px; font-size: 16px; font-weight: 700; color: #333; cursor: pointer; width: 100%; margin-top: 20px; transition: 0.3s; }
-        .google-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+        .google-btn { display: flex; align-items: center; justify-content: center; background: white; border: none; padding: 15px; border-radius: 12px; font-size: 16px; font-weight: 700; color: #333; cursor: pointer; width: 100%; margin-top: 20px; }
         
         .input-group { text-align: left; margin-bottom: 15px; }
         .input-group label { font-size: 13px; font-weight: 600; color: #cbd5e1; margin-bottom: 5px; display: block; }
-        .input-group input { width: 100%; padding: 12px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; color: white; outline: none; font-size: 15px; }
-        .input-group input:focus { border-color: #3b82f6; }
+        .input-group input { width: 100%; padding: 12px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; color: white; outline: none; }
 
         .religion-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
-        .religion-btn { padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); border-radius: 10px; font-size: 14px; font-weight: 700; color: white; cursor: pointer; transition: 0.2s; }
+        .religion-btn { padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); border-radius: 10px; font-size: 14px; font-weight: 700; color: white; cursor: pointer; }
         .religion-btn.selected { background: #3b82f6; border-color: #3b82f6; }
         
-        .save-btn { background: #3b82f6; color: white; border: none; padding: 15px; border-radius: 12px; font-size: 16px; font-weight: 800; cursor: pointer; width: 100%; transition: 0.3s; }
+        .save-btn { background: #3b82f6; color: white; border: none; padding: 15px; border-radius: 12px; font-size: 16px; font-weight: 800; cursor: pointer; width: 100%; }
         .save-btn:disabled { background: #475569; cursor: not-allowed; }
 
         /* Header */
         .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding: 10px 5px; }
         .header h2 { font-size: 24px; font-weight: 800; }
         .header-actions { display: flex; gap: 8px; }
-        .edit-btn, .logout-btn { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; padding: 8px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer; transition: 0.2s; }
+        .edit-btn, .logout-btn { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; padding: 8px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer; }
         .logout-btn { background: #ef4444; border-color: #ef4444; }
-        .logout-btn:hover { background: #dc2626; }
 
-        /* Search Box */
+        /* Search */
         .search-row { display: flex; gap: 10px; margin-bottom: 10px; }
-        .search-row input { flex: 1; padding: 12px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; color: white; outline: none; }
-        .search-row select { width: 100px; padding: 12px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; color: white; outline: none; }
+        .search-row input, .search-row select { padding: 12px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; color: white; outline: none; }
+        .search-row input { flex: 1; }
         .search-btn { width: 100%; background: #3b82f6; color: white; border: none; padding: 12px; border-radius: 8px; font-weight: 700; cursor: pointer; }
         .search-result { margin-top: 15px; display: none; background: rgba(59, 130, 246, 0.2); padding: 15px; border-radius: 8px; border-left: 4px solid #3b82f6; }
 
@@ -84,23 +81,27 @@
         .nav-btn { background: rgba(255,255,255,0.1); border: none; color: white; width: 35px; height: 35px; border-radius: 50%; font-size: 18px; font-weight: bold; cursor: pointer; }
         .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; text-align: center; }
         .day-name { font-size: 11px; font-weight: 700; color: #94a3b8; padding: 5px 0; }
-        .day-cell { padding: 8px 0; border-radius: 8px; font-size: 14px; font-weight: 600; position: relative; color: #e2e8f0; }
-        .day-cell.today { background: #3b82f6; color: white; box-shadow: 0 0 10px rgba(59, 130, 246, 0.5); }
+        .day-cell { padding: 8px 0; border-radius: 8px; font-size: 14px; font-weight: 600; position: relative; }
         .day-cell.has-event { color: #fbbf24; }
         .day-cell.has-event::after { content: ''; position: absolute; bottom: 2px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; background: #fbbf24; border-radius: 50%; }
         
-        /* Event List */
+        /* Events */
         .event-item { background: rgba(255,255,255,0.05); border-left: 4px solid #fbbf24; padding: 12px; margin-bottom: 10px; border-radius: 8px; }
         .event-title { font-size: 15px; font-weight: 700; color: #fbbf24; }
-        .event-wish { font-size: 14px; margin: 5px 0; color: #e2e8f0; }
         .event-date { font-size: 12px; color: #94a3b8; font-weight: 600; }
+
+        /* Notes & Alarm */
+        .note-item { background: rgba(255,255,255,0.05); border-left: 4px solid #3b82f6; padding: 12px; margin-bottom: 10px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; }
+        .note-item .info { flex: 1; }
+        .note-item .info p { font-size: 14px; font-weight: 600; }
+        .note-item .info span { font-size: 12px; color: #94a3b8; }
+        .note-del-btn { background: #ef4444; border: none; color: white; width: 25px; height: 25px; border-radius: 50%; font-size: 12px; cursor: pointer; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    
-    <!-- 1. LOGIN SCREEN -->
+    <!-- LOGIN SCREEN -->
     <div id="loginScreen" style="display:flex;">
         <div class="glass-card" style="width: 100%;">
             <h1>Unique Calendar</h1>
@@ -108,16 +109,14 @@
         </div>
     </div>
 
-    <!-- 2. SETUP SCREEN -->
+    <!-- SETUP SCREEN -->
     <div id="setupScreen">
         <div class="glass-card" style="width: 100%;">
             <h2 style="margin-bottom:15px;">Enter Your Details</h2>
-            
             <div class="input-group">
                 <label>Your Name</label>
                 <input type="text" id="setupName" placeholder="Enter your name">
             </div>
-
             <div class="input-group">
                 <label>Select Religion</label>
                 <div class="religion-grid">
@@ -127,17 +126,15 @@
                     <div class="religion-btn" id="btn-Christian" onclick="selectSetupReligion('Christian')">✝️ Christian</div>
                 </div>
             </div>
-
             <div class="input-group">
                 <label>Date of Birth</label>
                 <input type="date" id="setupDOB">
             </div>
-
             <button class="save-btn" id="saveSetupBtn" onclick="saveSetupData()" disabled>Save & Continue</button>
         </div>
     </div>
 
-    <!-- 3. MAIN CALENDAR APP -->
+    <!-- MAIN SCREEN -->
     <div id="mainScreen">
         <div class="header">
             <h2 id="userNameDisplay">Name</h2>
@@ -147,7 +144,7 @@
             </div>
         </div>
 
-        <!-- SEARCH BOX -->
+        <!-- SEARCH -->
         <div class="glass-card">
             <h3 style="font-size:16px; margin-bottom:10px;">🔍 Search Festival</h3>
             <div class="search-row">
@@ -179,12 +176,32 @@
             <h3 id="eventsTitle" style="font-size:16px; margin-bottom:15px;">🎉 Events</h3>
             <div id="festivalList"></div>
         </div>
-    </div>
 
+        <!-- NOTES & ALARM -->
+        <div class="glass-card">
+            <h3 style="font-size:16px; margin-bottom:10px;">🔔 My Notes & Alarms</h3>
+            <input type="text" id="noteTitle" placeholder="Note Title" style="width:100%; padding:12px; margin-bottom:10px; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.2); border-radius:8px; color:white;">
+            <div style="display:flex; gap:10px; margin-bottom:10px;">
+                <input type="date" id="noteDate" style="flex:1; padding:12px; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.2); border-radius:8px; color:white;">
+                <input type="time" id="noteTime" style="flex:1; padding:12px; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.2); border-radius:8px; color:white;">
+            </div>
+            <button class="save-btn" onclick="addNote()">Save Note</button>
+            <div id="notesList" style="margin-top:15px;"></div>
+        </div>
+    </div>
+</div>
+
+<!-- ALARM POPUP -->
+<div id="alarmModal" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); display:none; justify-content:center; align-items:center; z-index:1000;">
+    <div class="glass-card" style="text-align:center; width:80%; max-width:300px;">
+        <h2 style="color:#ef4444; margin-bottom:10px;">⏰ ALARM!</h2>
+        <p id="alarmText" style="font-size:18px; margin-bottom:20px;">Event Reminder</p>
+        <button class="save-btn" style="background:#ef4444;" onclick="document.getElementById('alarmModal').style.display='none'">Stop Alarm</button>
+    </div>
 </div>
 
 <script>
-    // ================= FIREBASE CONFIGURATION =================
+    // ================= FIREBASE =================
     const firebaseConfig = {
         apiKey: "AIzaSyDLGmIPpKC0pYFEv1-4OS7idMuXMFuFi9A",
         authDomain: "my-new-calendar-app-13d6d.firebaseapp.com",
@@ -202,132 +219,132 @@
     let currentUser = null;
     let userData = null;
     let allFestivals = []; 
+    let myNotes = [];
     let selectedSetupReligion = "";
     let currentMonth = new Date().getMonth();
     let currentYear = new Date().getFullYear();
 
-    // ================= THEME COLORS =================
     const themes = {
-        'Hindu': { primary: '#ea580c', light: 'rgba(234, 88, 12, 0.2)' }, 
-        'Muslim': { primary: '#16a34a', light: 'rgba(22, 163, 74, 0.2)' }, 
-        'Sikh': { primary: '#d97706', light: 'rgba(217, 119, 6, 0.2)' }, 
-        'Christian': { primary: '#64748b', light: 'rgba(100, 116, 139, 0.2)' } 
+        'Hindu': { primary: '#ea580c', light: 'rgba(234, 88, 12, 0.3)' }, 
+        'Muslim': { primary: '#16a34a', light: 'rgba(22, 163, 74, 0.3)' }, 
+        'Sikh': { primary: '#d97706', light: 'rgba(217, 119, 6, 0.3)' }, 
+        'Christian': { primary: '#64748b', light: 'rgba(100, 116, 139, 0.3)' } 
     };
 
     // ================= FESTIVAL DATABASE (2026-2030 From PDF) =================
     const defaultFestivals = [
         // 2026
-        { name: "New Year's Day", date: "2026-01-01", religion: "All", wish: "Happy New Year!" },
-        { name: "Makar Sankranti", date: "2026-01-14", religion: "Hindu", wish: "Happy Makar Sankranti!" },
-        { name: "Pongal", date: "2026-01-14", religion: "Hindu", wish: "Happy Pongal!" },
-        { name: "Vasant Panchami", date: "2026-01-23", religion: "Hindu", wish: "Happy Vasant Panchami!" },
-        { name: "Republic Day", date: "2026-01-26", religion: "All", wish: "Happy Republic Day!" },
-        { name: "Maha Shivaratri", date: "2026-02-15", religion: "Hindu", wish: "Har Har Mahadev!" },
-        { name: "Ramadan Start", date: "2026-02-19", religion: "Muslim", wish: "Ramadan Mubarak!" },
-        { name: "Holi", date: "2026-03-04", religion: "Hindu", wish: "Happy Holi!" },
-        { name: "Ramzan Id", date: "2026-03-21", religion: "Muslim", wish: "Eid Mubarak!" },
-        { name: "Rama Navami", date: "2026-03-26", religion: "Hindu", wish: "Jai Shri Ram!" },
-        { name: "Mahavir Jayanti", date: "2026-03-31", religion: "Jain", wish: "Happy Mahavir Jayanti!" },
-        { name: "Good Friday", date: "2026-04-03", religion: "Christian", wish: "Blessed Good Friday!" },
-        { name: "Ambedkar Jayanti", date: "2026-04-14", religion: "All", wish: "Jai Bhim!" },
-        { name: "Buddha Purnima", date: "2026-05-01", religion: "Buddhist", wish: "Happy Buddha Purnima!" },
-        { name: "Bakrid", date: "2026-05-28", religion: "Muslim", wish: "Bakrid Mubarak!" },
-        { name: "Muharram", date: "2026-06-26", religion: "Muslim", wish: "Muharram Mubarak!" },
-        { name: "Independence Day", date: "2026-08-15", religion: "All", wish: "Happy Independence Day!" },
-        { name: "Milad un-Nabi", date: "2026-08-26", religion: "Muslim", wish: "Eid Milad Mubarak!" },
-        { name: "Janmashtami", date: "2026-09-04", religion: "Hindu", wish: "Happy Janmashtami!" },
-        { name: "Gandhi Jayanti", date: "2026-10-02", religion: "All", wish: "Happy Gandhi Jayanti!" },
-        { name: "Dussehra", date: "2026-10-20", religion: "Hindu", wish: "Happy Dussehra!" },
-        { name: "Diwali", date: "2026-11-08", religion: "Hindu", wish: "Happy Diwali!" },
-        { name: "Guru Nanak Jayanti", date: "2026-11-24", religion: "Sikh", wish: "Happy Gurpurab!" },
-        { name: "Christmas", date: "2026-12-25", religion: "Christian", wish: "Merry Christmas!" },
-
+        { name: "New Year's Day", date: "2026-01-01", religion: "All" },
+        { name: "Makar Sankranti", date: "2026-01-14", religion: "Hindu" },
+        { name: "Pongal", date: "2026-01-14", religion: "Hindu" },
+        { name: "Vasant Panchami", date: "2026-01-23", religion: "Hindu" },
+        { name: "Republic Day", date: "2026-01-26", religion: "All" },
+        { name: "Maha Shivaratri", date: "2026-02-15", religion: "Hindu" },
+        { name: "Ramadan Start", date: "2026-02-19", religion: "Muslim" },
+        { name: "Holi", date: "2026-03-04", religion: "Hindu" },
+        { name: "Ramzan Id", date: "2026-03-21", religion: "Muslim" },
+        { name: "Rama Navami", date: "2026-03-26", religion: "Hindu" },
+        { name: "Mahavir Jayanti", date: "2026-03-31", religion: "Jain" },
+        { name: "Good Friday", date: "2026-04-03", religion: "Christian" },
+        { name: "Ambedkar Jayanti", date: "2026-04-14", religion: "All" },
+        { name: "Buddha Purnima", date: "2026-05-01", religion: "Buddhist" },
+        { name: "Bakrid", date: "2026-05-28", religion: "Muslim" },
+        { name: "Muharram", date: "2026-06-26", religion: "Muslim" },
+        { name: "Independence Day", date: "2026-08-15", religion: "All" },
+        { name: "Milad un-Nabi", date: "2026-08-26", religion: "Muslim" },
+        { name: "Janmashtami", date: "2026-09-04", religion: "Hindu" },
+        { name: "Gandhi Jayanti", date: "2026-10-02", religion: "All" },
+        { name: "Dussehra", date: "2026-10-20", religion: "Hindu" },
+        { name: "Diwali", date: "2026-11-08", religion: "Hindu" },
+        { name: "Guru Nanak Jayanti", date: "2026-11-24", religion: "Sikh" },
+        { name: "Christmas", date: "2026-12-25", religion: "Christian" },
+        
         // 2027
-        { name: "New Year's Day", date: "2027-01-01", religion: "All", wish: "Happy New Year!" },
-        { name: "Makar Sankranti", date: "2027-01-14", religion: "Hindu", wish: "Happy Makar Sankranti!" },
-        { name: "Republic Day", date: "2027-01-26", religion: "All", wish: "Happy Republic Day!" },
-        { name: "Ramadan Start", date: "2027-02-09", religion: "Muslim", wish: "Ramadan Mubarak!" },
-        { name: "Maha Shivaratri", date: "2027-03-06", religion: "Hindu", wish: "Har Har Mahadev!" },
-        { name: "Ramzan Id", date: "2027-03-10", religion: "Muslim", wish: "Eid Mubarak!" },
-        { name: "Holi", date: "2027-03-22", religion: "Hindu", wish: "Happy Holi!" },
-        { name: "Good Friday", date: "2027-03-26", religion: "Christian", wish: "Blessed Good Friday!" },
-        { name: "Ambedkar Jayanti", date: "2027-04-14", religion: "All", wish: "Jai Bhim!" },
-        { name: "Rama Navami", date: "2027-04-15", religion: "Hindu", wish: "Jai Shri Ram!" },
-        { name: "Mahavir Jayanti", date: "2027-04-19", religion: "Jain", wish: "Happy Mahavir Jayanti!" },
-        { name: "Bakrid", date: "2027-05-17", religion: "Muslim", wish: "Bakrid Mubarak!" },
-        { name: "Buddha Purnima", date: "2027-05-20", religion: "Buddhist", wish: "Happy Buddha Purnima!" },
-        { name: "Muharram", date: "2027-06-16", religion: "Muslim", wish: "Muharram Mubarak!" },
-        { name: "Independence Day", date: "2027-08-15", religion: "All", wish: "Happy Independence Day!" },
-        { name: "Milad un-Nabi", date: "2027-08-15", religion: "Muslim", wish: "Eid Milad Mubarak!" },
-        { name: "Janmashtami", date: "2027-08-25", religion: "Hindu", wish: "Happy Janmashtami!" },
-        { name: "Gandhi Jayanti", date: "2027-10-02", religion: "All", wish: "Happy Gandhi Jayanti!" },
-        { name: "Dussehra", date: "2027-10-09", religion: "Hindu", wish: "Happy Dussehra!" },
-        { name: "Diwali", date: "2027-10-29", religion: "Hindu", wish: "Happy Diwali!" },
-        { name: "Guru Nanak Jayanti", date: "2027-11-14", religion: "Sikh", wish: "Happy Gurpurab!" },
-        { name: "Christmas", date: "2027-12-25", religion: "Christian", wish: "Merry Christmas!" },
-
+        { name: "New Year's Day", date: "2027-01-01", religion: "All" },
+        { name: "Makar Sankranti", date: "2027-01-14", religion: "Hindu" },
+        { name: "Republic Day", date: "2027-01-26", religion: "All" },
+        { name: "Ramadan Start", date: "2027-02-09", religion: "Muslim" },
+        { name: "Maha Shivaratri", date: "2027-03-06", religion: "Hindu" },
+        { name: "Ramzan Id", date: "2027-03-10", religion: "Muslim" },
+        { name: "Holi", date: "2027-03-22", religion: "Hindu" },
+        { name: "Good Friday", date: "2027-03-26", religion: "Christian" },
+        { name: "Ambedkar Jayanti", date: "2027-04-14", religion: "All" },
+        { name: "Rama Navami", date: "2027-04-15", religion: "Hindu" },
+        { name: "Mahavir Jayanti", date: "2027-04-19", religion: "Jain" },
+        { name: "Bakrid", date: "2027-05-17", religion: "Muslim" },
+        { name: "Buddha Purnima", date: "2027-05-20", religion: "Buddhist" },
+        { name: "Muharram", date: "2027-06-16", religion: "Muslim" },
+        { name: "Independence Day", date: "2027-08-15", religion: "All" },
+        { name: "Milad un-Nabi", date: "2027-08-15", religion: "Muslim" },
+        { name: "Janmashtami", date: "2027-08-25", religion: "Hindu" },
+        { name: "Gandhi Jayanti", date: "2027-10-02", religion: "All" },
+        { name: "Dussehra", date: "2027-10-09", religion: "Hindu" },
+        { name: "Diwali", date: "2027-10-29", religion: "Hindu" },
+        { name: "Guru Nanak Jayanti", date: "2027-11-14", religion: "Sikh" },
+        { name: "Christmas", date: "2027-12-25", religion: "Christian" },
+        
         // 2028
-        { name: "New Year's Day", date: "2028-01-01", religion: "All", wish: "Happy New Year!" },
-        { name: "Makar Sankranti", date: "2028-01-15", religion: "Hindu", wish: "Happy Makar Sankranti!" },
-        { name: "Republic Day", date: "2028-01-26", religion: "All", wish: "Happy Republic Day!" },
-        { name: "Ramadan Start", date: "2028-01-29", religion: "Muslim", wish: "Ramadan Mubarak!" },
-        { name: "Maha Shivaratri", date: "2028-02-23", religion: "Hindu", wish: "Har Har Mahadev!" },
-        { name: "Ramzan Id", date: "2028-02-27", religion: "Muslim", wish: "Eid Mubarak!" },
-        { name: "Holi", date: "2028-03-11", religion: "Hindu", wish: "Happy Holi!" },
-        { name: "Rama Navami", date: "2028-04-03", religion: "Hindu", wish: "Jai Shri Ram!" },
-        { name: "Mahavir Jayanti", date: "2028-04-07", religion: "Jain", wish: "Happy Mahavir Jayanti!" },
-        { name: "Good Friday", date: "2028-04-14", religion: "Christian", wish: "Blessed Good Friday!" },
-        { name: "Ambedkar Jayanti", date: "2028-04-14", religion: "All", wish: "Jai Bhim!" },
-        { name: "Bakrid", date: "2028-05-06", religion: "Muslim", wish: "Bakrid Mubarak!" },
-        { name: "Muharram", date: "2028-06-04", religion: "Muslim", wish: "Muharram Mubarak!" },
-        { name: "Independence Day", date: "2028-08-15", religion: "All", wish: "Happy Independence Day!" },
-        { name: "Janmashtami", date: "2028-08-13", religion: "Hindu", wish: "Happy Janmashtami!" },
-        { name: "Gandhi Jayanti", date: "2028-10-02", religion: "All", wish: "Happy Gandhi Jayanti!" },
-        { name: "Dussehra", date: "2028-09-27", religion: "Hindu", wish: "Happy Dussehra!" },
-        { name: "Diwali", date: "2028-10-17", religion: "Hindu", wish: "Happy Diwali!" },
-        { name: "Christmas", date: "2028-12-25", religion: "Christian", wish: "Merry Christmas!" },
+        { name: "New Year's Day", date: "2028-01-01", religion: "All" },
+        { name: "Makar Sankranti", date: "2028-01-15", religion: "Hindu" },
+        { name: "Republic Day", date: "2028-01-26", religion: "All" },
+        { name: "Ramadan Start", date: "2028-01-29", religion: "Muslim" },
+        { name: "Maha Shivaratri", date: "2028-02-23", religion: "Hindu" },
+        { name: "Ramzan Id", date: "2028-02-27", religion: "Muslim" },
+        { name: "Holi", date: "2028-03-11", religion: "Hindu" },
+        { name: "Rama Navami", date: "2028-04-03", religion: "Hindu" },
+        { name: "Mahavir Jayanti", date: "2028-04-07", religion: "Jain" },
+        { name: "Good Friday", date: "2028-04-14", religion: "Christian" },
+        { name: "Ambedkar Jayanti", date: "2028-04-14", religion: "All" },
+        { name: "Bakrid", date: "2028-05-06", religion: "Muslim" },
+        { name: "Muharram", date: "2028-06-04", religion: "Muslim" },
+        { name: "Independence Day", date: "2028-08-15", religion: "All" },
+        { name: "Janmashtami", date: "2028-08-13", religion: "Hindu" },
+        { name: "Gandhi Jayanti", date: "2028-10-02", religion: "All" },
+        { name: "Dussehra", date: "2028-09-27", religion: "Hindu" },
+        { name: "Diwali", date: "2028-10-17", religion: "Hindu" },
+        { name: "Christmas", date: "2028-12-25", religion: "Christian" },
 
         // 2029
-        { name: "New Year's Day", date: "2029-01-01", religion: "All", wish: "Happy New Year!" },
-        { name: "Makar Sankranti", date: "2029-01-14", religion: "Hindu", wish: "Happy Makar Sankranti!" },
-        { name: "Republic Day", date: "2029-01-26", religion: "All", wish: "Happy Republic Day!" },
-        { name: "Ramadan Start", date: "2029-01-17", religion: "Muslim", wish: "Ramadan Mubarak!" },
-        { name: "Maha Shivaratri", date: "2029-02-11", religion: "Hindu", wish: "Har Har Mahadev!" },
-        { name: "Ramzan Id", date: "2029-02-15", religion: "Muslim", wish: "Eid Mubarak!" },
-        { name: "Holi", date: "2029-03-01", religion: "Hindu", wish: "Happy Holi!" },
-        { name: "Good Friday", date: "2029-03-30", religion: "Christian", wish: "Blessed Good Friday!" },
-        { name: "Ambedkar Jayanti", date: "2029-04-14", religion: "All", wish: "Jai Bhim!" },
-        { name: "Rama Navami", date: "2029-04-22", religion: "Hindu", wish: "Jai Shri Ram!" },
-        { name: "Bakrid", date: "2029-04-25", religion: "Muslim", wish: "Bakrid Mubarak!" },
-        { name: "Mahavir Jayanti", date: "2029-04-26", religion: "Jain", wish: "Happy Mahavir Jayanti!" },
-        { name: "Muharram", date: "2029-05-25", religion: "Muslim", wish: "Muharram Mubarak!" },
-        { name: "Independence Day", date: "2029-08-15", religion: "All", wish: "Happy Independence Day!" },
-        { name: "Janmashtami", date: "2029-09-01", religion: "Hindu", wish: "Happy Janmashtami!" },
-        { name: "Gandhi Jayanti", date: "2029-10-02", religion: "All", wish: "Happy Gandhi Jayanti!" },
-        { name: "Dussehra", date: "2029-10-16", religion: "Hindu", wish: "Happy Dussehra!" },
-        { name: "Diwali", date: "2029-11-05", religion: "Hindu", wish: "Happy Diwali!" },
-        { name: "Christmas", date: "2029-12-25", religion: "Christian", wish: "Merry Christmas!" },
+        { name: "New Year's Day", date: "2029-01-01", religion: "All" },
+        { name: "Makar Sankranti", date: "2029-01-14", religion: "Hindu" },
+        { name: "Republic Day", date: "2029-01-26", religion: "All" },
+        { name: "Ramadan Start", date: "2029-01-17", religion: "Muslim" },
+        { name: "Maha Shivaratri", date: "2029-02-11", religion: "Hindu" },
+        { name: "Ramzan Id", date: "2029-02-15", religion: "Muslim" },
+        { name: "Holi", date: "2029-03-01", religion: "Hindu" },
+        { name: "Good Friday", date: "2029-03-30", religion: "Christian" },
+        { name: "Ambedkar Jayanti", date: "2029-04-14", religion: "All" },
+        { name: "Rama Navami", date: "2029-04-22", religion: "Hindu" },
+        { name: "Bakrid", date: "2029-04-25", religion: "Muslim" },
+        { name: "Mahavir Jayanti", date: "2029-04-26", religion: "Jain" },
+        { name: "Muharram", date: "2029-05-25", religion: "Muslim" },
+        { name: "Independence Day", date: "2029-08-15", religion: "All" },
+        { name: "Janmashtami", date: "2029-09-01", religion: "Hindu" },
+        { name: "Gandhi Jayanti", date: "2029-10-02", religion: "All" },
+        { name: "Dussehra", date: "2029-10-16", religion: "Hindu" },
+        { name: "Diwali", date: "2029-11-05", religion: "Hindu" },
+        { name: "Christmas", date: "2029-12-25", religion: "Christian" },
 
         // 2030
-        { name: "New Year's Day", date: "2030-01-01", religion: "All", wish: "Happy New Year!" },
-        { name: "Makar Sankranti", date: "2030-01-14", religion: "Hindu", wish: "Happy Makar Sankranti!" },
-        { name: "Republic Day", date: "2030-01-26", religion: "All", wish: "Happy Republic Day!" },
-        { name: "Ramadan Start", date: "2030-01-06", religion: "Muslim", wish: "Ramadan Mubarak!" },
-        { name: "Ramzan Id", date: "2030-02-05", religion: "Muslim", wish: "Eid Mubarak!" },
-        { name: "Maha Shivaratri", date: "2030-03-02", religion: "Hindu", wish: "Har Har Mahadev!" },
-        { name: "Holi", date: "2030-03-20", religion: "Hindu", wish: "Happy Holi!" },
-        { name: "Rama Navami", date: "2030-04-12", religion: "Hindu", wish: "Jai Shri Ram!" },
-        { name: "Bakrid", date: "2030-04-14", religion: "Muslim", wish: "Bakrid Mubarak!" },
-        { name: "Ambedkar Jayanti", date: "2030-04-14", religion: "All", wish: "Jai Bhim!" },
-        { name: "Mahavir Jayanti", date: "2030-04-16", religion: "Jain", wish: "Happy Mahavir Jayanti!" },
-        { name: "Good Friday", date: "2030-04-19", religion: "Christian", wish: "Blessed Good Friday!" },
-        { name: "Muharram", date: "2030-05-14", religion: "Muslim", wish: "Muharram Mubarak!" },
-        { name: "Independence Day", date: "2030-08-15", religion: "All", wish: "Happy Independence Day!" },
-        { name: "Janmashtami", date: "2030-08-21", religion: "Hindu", wish: "Happy Janmashtami!" },
-        { name: "Gandhi Jayanti", date: "2030-10-02", religion: "All", wish: "Happy Gandhi Jayanti!" },
-        { name: "Dussehra", date: "2030-10-06", religion: "Hindu", wish: "Happy Dussehra!" },
-        { name: "Diwali", date: "2030-10-26", religion: "Hindu", wish: "Happy Diwali!" },
-        { name: "Christmas", date: "2030-12-25", religion: "Christian", wish: "Merry Christmas!" }
+        { name: "New Year's Day", date: "2030-01-01", religion: "All" },
+        { name: "Makar Sankranti", date: "2030-01-14", religion: "Hindu" },
+        { name: "Republic Day", date: "2030-01-26", religion: "All" },
+        { name: "Ramadan Start", date: "2030-01-06", religion: "Muslim" },
+        { name: "Ramzan Id", date: "2030-02-05", religion: "Muslim" },
+        { name: "Maha Shivaratri", date: "2030-03-02", religion: "Hindu" },
+        { name: "Holi", date: "2030-03-20", religion: "Hindu" },
+        { name: "Rama Navami", date: "2030-04-12", religion: "Hindu" },
+        { name: "Bakrid", date: "2030-04-14", religion: "Muslim" },
+        { name: "Ambedkar Jayanti", date: "2030-04-14", religion: "All" },
+        { name: "Mahavir Jayanti", date: "2030-04-16", religion: "Jain" },
+        { name: "Good Friday", date: "2030-04-19", religion: "Christian" },
+        { name: "Muharram", date: "2030-05-14", religion: "Muslim" },
+        { name: "Independence Day", date: "2030-08-15", religion: "All" },
+        { name: "Janmashtami", date: "2030-08-21", religion: "Hindu" },
+        { name: "Gandhi Jayanti", date: "2030-10-02", religion: "All" },
+        { name: "Dussehra", date: "2030-10-06", religion: "Hindu" },
+        { name: "Diwali", date: "2030-10-26", religion: "Hindu" },
+        { name: "Christmas", date: "2030-12-25", religion: "Christian" }
     ];
 
     // ================= AUTH & DATA LOADING =================
@@ -339,6 +356,7 @@
             if (userDoc.exists && userDoc.data().religion) {
                 userData = userDoc.data();
                 await loadFestivals(); 
+                await loadNotes();
                 showMainScreen();
             } else {
                 document.getElementById("loginScreen").style.display = "none";
@@ -352,21 +370,24 @@
         }
     });
 
-    // ================= FIREBASE DATA =================
     async function loadFestivals() {
         try {
             const snapshot = await db.collection("festivals").get();
             allFestivals = [];
-            snapshot.forEach(doc => {
-                allFestivals.push(doc.data());
-            });
-            if (allFestivals.length === 0) {
-                allFestivals = defaultFestivals;
-            }
+            snapshot.forEach(doc => allFestivals.push(doc.data()));
+            if (allFestivals.length === 0) allFestivals = defaultFestivals;
         } catch (e) {
-            console.log("Error loading festivals: " + e.message);
             allFestivals = defaultFestivals;
         }
+    }
+
+    async function loadNotes() {
+        if(!currentUser) return;
+        try {
+            const snapshot = await db.collection("notes").where("userId", "==", currentUser.uid).get();
+            myNotes = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            renderNotes();
+        } catch (e) { console.log(e); }
     }
 
     // ================= LOGIN & SETUP =================
@@ -376,9 +397,7 @@
     };
 
     window.logout = function() {
-        if(confirm("Do you want to logout?")) {
-            auth.signOut();
-        }
+        if(confirm("Do you want to logout?")) auth.signOut();
     };
 
     window.selectSetupReligion = function(religion) {
@@ -404,13 +423,11 @@
 
         try {
             await db.collection("users").doc(currentUser.uid).set({
-                name: name,
-                religion: selectedSetupReligion,
-                dob: dob,
-                email: currentUser.email
+                name, religion: selectedSetupReligion, dob, email: currentUser.email
             });
-            userData = { name: name, religion: selectedSetupReligion, dob: dob };
+            userData = { name, religion: selectedSetupReligion, dob };
             await loadFestivals();
+            await loadNotes();
             showMainScreen();
         } catch (e) { alert("Error: " + e.message); }
     };
@@ -433,11 +450,9 @@
     window.editProfile = function() {
         document.getElementById("mainScreen").style.display = "none";
         document.getElementById("setupScreen").style.display = "flex";
-        
         document.getElementById("setupName").value = userData.name;
         document.getElementById("setupDOB").value = userData.dob;
         selectSetupReligion(userData.religion);
-        
         document.getElementById("saveSetupBtn").innerText = "Update Profile";
     };
 
@@ -467,13 +482,8 @@
         for(let d=1; d<=daysInMonth; d++) {
             const dateStr = `${currentYear}-${String(currentMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
             const hasEvent = monthEvents.some(e => e.date === dateStr);
-            
-            let classes = "day-cell";
-            if(hasEvent) classes += " has-event";
-
-            grid.innerHTML += `<div class="${classes}">${d}</div>`;
+            grid.innerHTML += `<div class="day-cell ${hasEvent?'has-event':''}">${d}</div>`;
         }
-
         renderEventList(monthEvents);
     }
 
@@ -490,7 +500,6 @@
                 <div class="event-item">
                     <div class="event-title">${f.name}</div>
                     <div class="event-date">📅 ${displayDate}</div>
-                    <div class="event-wish">${f.wish}</div>
                 </div>
             `;
         });
@@ -503,12 +512,11 @@
         renderCalendar();
     };
 
-    // ================= SEARCH LOGIC =================
+    // ================= SEARCH =================
     window.searchFestival = function() {
         const term = document.getElementById("searchFestival").value.trim().toLowerCase();
         const year = document.getElementById("searchYear").value;
         const resultBox = document.getElementById("searchResult");
-
         if(!term) return alert("Please enter festival name!");
 
         const results = allFestivals.filter(f => {
@@ -528,10 +536,85 @@
             });
             resultBox.innerHTML = html;
         } else {
-            resultBox.innerHTML = "<p style='color:#ef4444;'>No festival found for this year.</p>";
+            resultBox.innerHTML = "<p style='color:#ef4444;'>No festival found.</p>";
         }
         resultBox.style.display = "block";
     };
+
+    // ================= NOTES & ALARM =================
+    window.addNote = async function() {
+        const title = document.getElementById("noteTitle").value.trim();
+        const date = document.getElementById("noteDate").value;
+        const time = document.getElementById("noteTime").value;
+        if(!title || !date || !time) return alert("Please fill all fields!");
+
+        try {
+            await db.collection("notes").add({
+                userId: currentUser.uid,
+                title, date, time
+            });
+            document.getElementById("noteTitle").value = "";
+            document.getElementById("noteDate").value = "";
+            document.getElementById("noteTime").value = "";
+            loadNotes();
+        } catch (e) { alert("Error: " + e.message); }
+    };
+
+    window.deleteNote = async function(id) {
+        if(!confirm("Delete this note?")) return;
+        try {
+            await db.collection("notes").doc(id).delete();
+            loadNotes();
+        } catch (e) { alert(e.message); }
+    };
+
+    function renderNotes() {
+        const list = document.getElementById("notesList");
+        list.innerHTML = "";
+        if(myNotes.length === 0) {
+            list.innerHTML = "<p style='font-size:12px; color:#94a3b8;'>No notes yet.</p>";
+            return;
+        }
+        myNotes.forEach(n => {
+            list.innerHTML += `
+                <div class="note-item">
+                    <div class="info">
+                        <p>${n.title}</p>
+                        <span>📅 ${n.date} ⏰ ${n.time}</span>
+                    </div>
+                    <button class="note-del-btn" onclick="deleteNote('${n.id}')">✕</button>
+                </div>
+            `;
+        });
+    }
+
+    // Alarm Check (Every 10 seconds)
+    setInterval(() => {
+        const now = new Date();
+        const currentDate = now.toISOString().slice(0, 10);
+        const currentTime = now.toTimeString().slice(0, 5);
+
+        myNotes.forEach(n => {
+            if(n.date === currentDate && n.time === currentTime) {
+                if(!n.triggered) {
+                    n.triggered = true;
+                    document.getElementById("alarmText").innerText = n.title;
+                    document.getElementById("alarmModal").style.display = "flex";
+                    // Play Beep
+                    try {
+                        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                        const osc = ctx.createOscillator();
+                        osc.type = 'square';
+                        osc.frequency.value = 800;
+                        osc.connect(ctx.destination);
+                        osc.start();
+                        setTimeout(() => osc.stop(), 2000);
+                    } catch(e) {}
+                }
+            }
+        });
+    }, 10000);
+
 </script>
 
 </body>
