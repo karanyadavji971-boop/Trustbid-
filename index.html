@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -107,15 +107,15 @@
     <!-- 2. SETUP SCREEN -->
     <div id="setupScreen">
         <div class="glass-card">
-            <h2 style="margin-bottom:15px;">Apni Details Bharein</h2>
+            <h2 style="margin-bottom:15px;">Enter Your Details</h2>
             
             <div class="input-group">
-                <label>Apna Naam</label>
+                <label>Your Name</label>
                 <input type="text" id="setupName" placeholder="Enter your name">
             </div>
 
             <div class="input-group">
-                <label>Apna Dharm Chunein</label>
+                <label>Select Religion</label>
                 <div class="religion-grid">
                     <div class="religion-btn" id="btn-Hindu" onclick="selectSetupReligion('Hindu')">🕉️ Hindu</div>
                     <div class="religion-btn" id="btn-Muslim" onclick="selectSetupReligion('Muslim')">☪️ Muslim</div>
@@ -136,13 +136,13 @@
     <!-- 3. MAIN CALENDAR APP -->
     <div id="mainScreen">
         <div class="header">
-            <h2>Unique Calendar</h2>
+            <h2 id="userNameDisplay">Unique Calendar</h2>
             <button class="edit-btn" onclick="editProfile()">Edit Profile</button>
         </div>
 
         <!-- SEARCH BOX -->
         <div class="glass-card">
-            <h3 style="font-size:16px; margin-bottom:10px;">🔍 Search Tyohar</h3>
+            <h3 style="font-size:16px; margin-bottom:10px;">🔍 Search Festival</h3>
             <div class="search-row">
                 <input type="text" id="searchFestival" placeholder="e.g. Diwali">
                 <select id="searchYear">
@@ -200,11 +200,56 @@
     let currentMonth = new Date().getMonth();
     let currentYear = new Date().getFullYear();
 
+    // ================= GOVERNMENT HOLIDAYS DATABASE (From PDF) =================
+    // This data is used if Firebase is empty. You can also add this to Firebase.
+    const defaultFestivals = [
+        // 2026
+        { name: "New Year's Day", date: "2026-01-01", religion: "All", wish: "Happy New Year!" },
+        { name: "Makar Sankranti", date: "2026-01-14", religion: "Hindu", wish: "Happy Makar Sankranti!" },
+        { name: "Republic Day", date: "2026-01-26", religion: "All", wish: "Happy Republic Day!" },
+        { name: "Holi", date: "2026-03-04", religion: "Hindu", wish: "Happy Holi!" },
+        { name: "Id-ul-Fitr", date: "2026-03-21", religion: "Muslim", wish: "Eid Mubarak!" },
+        { name: "Ram Navami", date: "2026-03-26", religion: "Hindu", wish: "Jai Shri Ram!" },
+        { name: "Mahavir Jayanti", date: "2026-03-31", religion: "Jain", wish: "Happy Mahavir Jayanti!" },
+        { name: "Good Friday", date: "2026-04-03", religion: "Christian", wish: "Blessed Good Friday!" },
+        { name: "Buddha Purnima", date: "2026-05-01", religion: "Buddhist", wish: "Happy Buddha Purnima!" },
+        { name: "Id-ul-Zuha (Bakrid)", date: "2026-05-28", religion: "Muslim", wish: "Bakrid Mubarak!" },
+        { name: "Muharram", date: "2026-06-26", religion: "Muslim", wish: "Muharram Mubarak!" },
+        { name: "Independence Day", date: "2026-08-15", religion: "All", wish: "Happy Independence Day!" },
+        { name: "Id-e-Milad", date: "2026-08-26", religion: "Muslim", wish: "Eid Milad Mubarak!" },
+        { name: "Janmashtami", date: "2026-09-04", religion: "Hindu", wish: "Happy Janmashtami!" },
+        { name: "Gandhi Jayanti", date: "2026-10-02", religion: "All", wish: "Happy Gandhi Jayanti!" },
+        { name: "Dussehra", date: "2026-10-20", religion: "Hindu", wish: "Happy Dussehra!" },
+        { name: "Diwali", date: "2026-11-08", religion: "Hindu", wish: "Happy Diwali!" },
+        { name: "Guru Nanak Jayanti", date: "2026-11-24", religion: "Sikh", wish: "Happy Gurpurab!" },
+        { name: "Christmas", date: "2026-12-25", religion: "Christian", wish: "Merry Christmas!" },
+        
+        // 2027
+        { name: "Republic Day", date: "2027-01-26", religion: "All", wish: "Happy Republic Day!" },
+        { name: "Holi", date: "2027-03-22", religion: "Hindu", wish: "Happy Holi!" },
+        { name: "Id-ul-Fitr", date: "2027-03-10", religion: "Muslim", wish: "Eid Mubarak!" },
+        { name: "Good Friday", date: "2027-03-26", religion: "Christian", wish: "Blessed Good Friday!" },
+        { name: "Ram Navami", date: "2027-04-15", religion: "Hindu", wish: "Jai Shri Ram!" },
+        { name: "Mahavir Jayanti", date: "2027-04-19", religion: "Jain", wish: "Happy Mahavir Jayanti!" },
+        { name: "Id-ul-Zuha (Bakrid)", date: "2027-05-17", religion: "Muslim", wish: "Bakrid Mubarak!" },
+        { name: "Buddha Purnima", date: "2027-05-20", religion: "Buddhist", wish: "Happy Buddha Purnima!" },
+        { name: "Muharram", date: "2027-06-15", religion: "Muslim", wish: "Muharram Mubarak!" },
+        { name: "Independence Day", date: "2027-08-15", religion: "All", wish: "Happy Independence Day!" },
+        { name: "Id-e-Milad", date: "2027-08-16", religion: "Muslim", wish: "Eid Milad Mubarak!" },
+        { name: "Janmashtami", date: "2027-08-25", religion: "Hindu", wish: "Happy Janmashtami!" },
+        { name: "Gandhi Jayanti", date: "2027-10-02", religion: "All", wish: "Happy Gandhi Jayanti!" },
+        { name: "Dussehra", date: "2027-10-09", religion: "Hindu", wish: "Happy Dussehra!" },
+        { name: "Diwali", date: "2027-10-29", religion: "Hindu", wish: "Happy Diwali!" },
+        { name: "Guru Nanak Jayanti", date: "2027-11-14", religion: "Sikh", wish: "Happy Gurpurab!" },
+        { name: "Christmas", date: "2027-12-25", religion: "Christian", wish: "Merry Christmas!" }
+    ];
+
     const themes = {
         'Hindu': { primary: '#f97316', light: 'rgba(249, 115, 22, 0.2)' }, 
         'Muslim': { primary: '#22c55e', light: 'rgba(34, 197, 94, 0.2)' }, 
         'Sikh': { primary: '#eab308', light: 'rgba(234, 179, 8, 0.2)' }, 
-        'Christian': { primary: '#94a3b8', light: 'rgba(148, 163, 184, 0.2)' } 
+        'Christian': { primary: '#94a3b8', light: 'rgba(148, 163, 184, 0.2)' },
+        'All': { primary: '#3b82f6', light: 'rgba(59, 130, 246, 0.2)' }
     };
 
     // ================= AUTH & DATA LOADING =================
@@ -237,8 +282,13 @@
             snapshot.forEach(doc => {
                 allFestivals.push(doc.data());
             });
+            // Agar Firebase empty hai, toh default data use karein
+            if (allFestivals.length === 0) {
+                allFestivals = defaultFestivals;
+            }
         } catch (e) {
             console.log("Error loading festivals: " + e.message);
+            allFestivals = defaultFestivals;
         }
     }
 
@@ -261,7 +311,6 @@
         document.getElementById("saveSetupBtn").disabled = !(selectedSetupReligion && dob && name);
     };
 
-    // Attach event listeners for inputs
     document.getElementById("setupName").addEventListener('input', checkSetupReady);
     document.getElementById("setupDOB").addEventListener('change', checkSetupReady);
 
@@ -289,7 +338,11 @@
         document.getElementById("setupScreen").style.display = "none";
         document.getElementById("mainScreen").style.display = "block";
 
-        const theme = themes[userData.religion];
+        // Update Name
+        document.getElementById("userNameDisplay").innerText = userData.name || "Unique Calendar";
+
+        // Apply Theme
+        const theme = themes[userData.religion] || themes['All'];
         document.documentElement.style.setProperty('--primary', theme.primary);
         document.documentElement.style.setProperty('--primary-light', theme.light);
 
@@ -300,12 +353,10 @@
         document.getElementById("mainScreen").style.display = "none";
         document.getElementById("setupScreen").style.display = "flex";
         
-        // Pre-fill existing data
         document.getElementById("setupName").value = userData.name;
         document.getElementById("setupDOB").value = userData.dob;
         selectSetupReligion(userData.religion);
         
-        // Change Button Text
         document.getElementById("saveSetupBtn").innerText = "Update Profile";
     };
 
@@ -323,9 +374,10 @@
         const firstDay = new Date(currentYear, currentMonth, 1).getDay();
         const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
 
-        // Filter events based on Religion and Month
         let monthEvents = allFestivals.filter(f => {
-            if(!f.date || f.religion !== userData.religion) return false;
+            if(!f.date) return false;
+            // Show event if religion matches OR event is for "All"
+            if(f.religion !== userData.religion && f.religion !== 'All') return false;
             let d = new Date(f.date);
             return d.getMonth() === currentMonth && d.getFullYear() === currentYear;
         });
@@ -349,7 +401,7 @@
         const list = document.getElementById("festivalList");
         list.innerHTML = "";
         if(events.length === 0) {
-            list.innerHTML = "<p style='font-size:14px; color:#94a3b8;'>Koi tyohar nahi hai.</p>";
+            list.innerHTML = "<p style='font-size:14px; color:#94a3b8;'>No festivals this month.</p>";
             return;
         }
         events.forEach(f => {
@@ -377,10 +429,11 @@
         const year = document.getElementById("searchYear").value;
         const resultBox = document.getElementById("searchResult");
 
-        if(!term) return alert("Tyohar ka naam likhein!");
+        if(!term) return alert("Please enter festival name!");
 
         const results = allFestivals.filter(f => {
-            if(!f.date || f.religion !== userData.religion) return false;
+            if(!f.date) return false;
+            if(f.religion !== userData.religion && f.religion !== 'All') return false;
             let dateObj = new Date(f.date);
             return f.name.toLowerCase().includes(term) && dateObj.getFullYear().toString() === year;
         });
@@ -391,11 +444,11 @@
                 let d = new Date(r.date);
                 let dayName = d.toLocaleDateString('en-IN', { weekday: 'long' });
                 let formattedDate = d.toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' });
-                html += `<p>📅 <b>${formattedDate}</b> (${dayName})</p>`;
+                html += `<p style="margin-bottom:8px;">📅 <b>${formattedDate}</b> (${dayName})</p>`;
             });
             resultBox.innerHTML = html;
         } else {
-            resultBox.innerHTML = "<p style='color:#ef4444;'>Is saal ka koi tyohar nahi mila.</p>";
+            resultBox.innerHTML = "<p style='color:#ef4444;'>No festival found for this year.</p>";
         }
         resultBox.style.display = "block";
     };
