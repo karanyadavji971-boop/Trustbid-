@@ -14,6 +14,13 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
         
+        /* Theme Variables - These will change dynamically */
+        :root {
+            --primary: #0f172a;
+            --secondary: #1e293b;
+            --accent: #3b82f6;
+        }
+
         /* Animated Background */
         @keyframes gradientBG {
             0% { background-position: 0% 50%; }
@@ -21,7 +28,7 @@
             100% { background-position: 0% 50%; }
         }
         body { 
-            background: linear-gradient(-45deg, #0f172a, #1e1b4b, #2e1065, #0f172a);
+            background: linear-gradient(-45deg, var(--primary), var(--secondary), var(--primary));
             background-size: 400% 400%;
             animation: gradientBG 15s ease infinite;
             color: white; min-height: 100vh; 
@@ -57,9 +64,9 @@
 
         .religion-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
         .religion-btn { padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); border-radius: 10px; font-size: 14px; font-weight: 700; color: white; cursor: pointer; }
-        .religion-btn.selected { background: #3b82f6; border-color: #3b82f6; }
+        .religion-btn.selected { background: var(--accent); border-color: var(--accent); }
         
-        .save-btn { background: #3b82f6; color: white; border: none; padding: 15px; border-radius: 12px; font-size: 16px; font-weight: 800; cursor: pointer; width: 100%; }
+        .save-btn { background: var(--accent); color: white; border: none; padding: 15px; border-radius: 12px; font-size: 16px; font-weight: 800; cursor: pointer; width: 100%; }
         .save-btn:disabled { background: #475569; cursor: not-allowed; }
 
         /* Header */
@@ -73,8 +80,8 @@
         .search-row { display: flex; gap: 10px; margin-bottom: 10px; }
         .search-row input, .search-row select { padding: 12px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; color: white; outline: none; }
         .search-row input { flex: 1; }
-        .search-btn { width: 100%; background: #3b82f6; color: white; border: none; padding: 12px; border-radius: 8px; font-weight: 700; cursor: pointer; }
-        .search-result { margin-top: 15px; display: none; background: rgba(59, 130, 246, 0.2); padding: 15px; border-radius: 8px; border-left: 4px solid #3b82f6; }
+        .search-btn { width: 100%; background: var(--accent); color: white; border: none; padding: 12px; border-radius: 8px; font-weight: 700; cursor: pointer; }
+        .search-result { margin-top: 15px; display: none; background: rgba(255, 255, 255, 0.1); padding: 15px; border-radius: 8px; border-left: 4px solid var(--accent); }
 
         /* Calendar */
         .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
@@ -86,16 +93,9 @@
         .day-cell.has-event::after { content: ''; position: absolute; bottom: 2px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; background: #fbbf24; border-radius: 50%; }
         
         /* Events */
-        .event-item { background: rgba(255,255,255,0.05); border-left: 4px solid #fbbf24; padding: 12px; margin-bottom: 10px; border-radius: 8px; }
-        .event-title { font-size: 15px; font-weight: 700; color: #fbbf24; }
+        .event-item { background: rgba(255,255,255,0.05); border-left: 4px solid var(--accent); padding: 12px; margin-bottom: 10px; border-radius: 8px; }
+        .event-title { font-size: 15px; font-weight: 700; color: var(--accent); }
         .event-date { font-size: 12px; color: #94a3b8; font-weight: 600; }
-
-        /* Notes & Alarm */
-        .note-item { background: rgba(255,255,255,0.05); border-left: 4px solid #3b82f6; padding: 12px; margin-bottom: 10px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; }
-        .note-item .info { flex: 1; }
-        .note-item .info p { font-size: 14px; font-weight: 600; }
-        .note-item .info span { font-size: 12px; color: #94a3b8; }
-        .note-del-btn { background: #ef4444; border: none; color: white; width: 25px; height: 25px; border-radius: 50%; font-size: 12px; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -176,27 +176,6 @@
             <h3 id="eventsTitle" style="font-size:16px; margin-bottom:15px;">🎉 Events</h3>
             <div id="festivalList"></div>
         </div>
-
-        <!-- NOTES & ALARM -->
-        <div class="glass-card">
-            <h3 style="font-size:16px; margin-bottom:10px;">🔔 My Notes & Alarms</h3>
-            <input type="text" id="noteTitle" placeholder="Note Title" style="width:100%; padding:12px; margin-bottom:10px; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.2); border-radius:8px; color:white;">
-            <div style="display:flex; gap:10px; margin-bottom:10px;">
-                <input type="date" id="noteDate" style="flex:1; padding:12px; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.2); border-radius:8px; color:white;">
-                <input type="time" id="noteTime" style="flex:1; padding:12px; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.2); border-radius:8px; color:white;">
-            </div>
-            <button class="save-btn" onclick="addNote()">Save Note</button>
-            <div id="notesList" style="margin-top:15px;"></div>
-        </div>
-    </div>
-</div>
-
-<!-- ALARM POPUP -->
-<div id="alarmModal" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); display:none; justify-content:center; align-items:center; z-index:1000;">
-    <div class="glass-card" style="text-align:center; width:80%; max-width:300px;">
-        <h2 style="color:#ef4444; margin-bottom:10px;">⏰ ALARM!</h2>
-        <p id="alarmText" style="font-size:18px; margin-bottom:20px;">Event Reminder</p>
-        <button class="save-btn" style="background:#ef4444;" onclick="document.getElementById('alarmModal').style.display='none'">Stop Alarm</button>
     </div>
 </div>
 
@@ -219,132 +198,261 @@
     let currentUser = null;
     let userData = null;
     let allFestivals = []; 
-    let myNotes = [];
     let selectedSetupReligion = "";
     let currentMonth = new Date().getMonth();
     let currentYear = new Date().getFullYear();
 
+    // ================= THEME COLORS =================
     const themes = {
-        'Hindu': { primary: '#ea580c', light: 'rgba(234, 88, 12, 0.3)' }, 
-        'Muslim': { primary: '#16a34a', light: 'rgba(22, 163, 74, 0.3)' }, 
-        'Sikh': { primary: '#d97706', light: 'rgba(217, 119, 6, 0.3)' }, 
-        'Christian': { primary: '#64748b', light: 'rgba(100, 116, 139, 0.3)' } 
+        'Hindu': { primary: '#2d0a00', secondary: '#4a1500', accent: '#ea580c' }, 
+        'Muslim': { primary: '#052e16', secondary: '#064e3b', accent: '#16a34a' }, 
+        'Sikh': { primary: '#2c1a00', secondary: '#451a03', accent: '#d97706' }, 
+        'Christian': { primary: '#0f172a', secondary: '#1e293b', accent: '#64748b' } 
     };
 
-    // ================= FESTIVAL DATABASE (2026-2030 From PDF) =================
+    // ================= FULL FESTIVAL DATABASE (2026-2030 From PDF) =================
+    // (All 231 events carefully extracted)
     const defaultFestivals = [
         // 2026
         { name: "New Year's Day", date: "2026-01-01", religion: "All" },
+        { name: "Hazarat Ali's Birthday", date: "2026-01-03", religion: "Muslim" },
         { name: "Makar Sankranti", date: "2026-01-14", religion: "Hindu" },
         { name: "Pongal", date: "2026-01-14", religion: "Hindu" },
         { name: "Vasant Panchami", date: "2026-01-23", religion: "Hindu" },
         { name: "Republic Day", date: "2026-01-26", religion: "All" },
+        { name: "Guru Ravidas Jayanti", date: "2026-02-01", religion: "Sikh" },
+        { name: "Maharishi Dayanand Saraswati Jayanti", date: "2026-02-12", religion: "Hindu" },
         { name: "Maha Shivaratri", date: "2026-02-15", religion: "Hindu" },
         { name: "Ramadan Start", date: "2026-02-19", religion: "Muslim" },
+        { name: "Shivaji Jayanti", date: "2026-02-19", religion: "Hindu" },
+        { name: "Holika Dahana", date: "2026-03-03", religion: "Hindu" },
         { name: "Holi", date: "2026-03-04", religion: "Hindu" },
+        { name: "Cheti Chand", date: "2026-03-19", religion: "Sikh" },
+        { name: "Gudi Padwa", date: "2026-03-19", religion: "Hindu" },
+        { name: "Ugadi", date: "2026-03-19", religion: "Hindu" },
+        { name: "Jamat Ul-Vida", date: "2026-03-20", religion: "Muslim" },
         { name: "Ramzan Id", date: "2026-03-21", religion: "Muslim" },
         { name: "Rama Navami", date: "2026-03-26", religion: "Hindu" },
         { name: "Mahavir Jayanti", date: "2026-03-31", religion: "Jain" },
         { name: "Good Friday", date: "2026-04-03", religion: "Christian" },
         { name: "Ambedkar Jayanti", date: "2026-04-14", religion: "All" },
+        { name: "Mesadi", date: "2026-04-14", religion: "Hindu" },
+        { name: "Vaisakhi", date: "2026-04-14", religion: "Sikh" },
+        { name: "Vishu", date: "2026-04-14", religion: "Hindu" },
+        { name: "Bahag Bihu (Assam)", date: "2026-04-15", religion: "Hindu" },
+        { name: "Vaisakhadi (Bengal)", date: "2026-04-15", religion: "Hindu" },
         { name: "Buddha Purnima", date: "2026-05-01", religion: "Buddhist" },
+        { name: "Birthday of Rabindranath", date: "2026-05-09", religion: "All" },
         { name: "Bakrid", date: "2026-05-28", religion: "Muslim" },
-        { name: "Muharram", date: "2026-06-26", religion: "Muslim" },
+        { name: "Muharram/Ashura", date: "2026-06-26", religion: "Muslim" },
+        { name: "Rath Yatra", date: "2026-07-16", religion: "Hindu" },
         { name: "Independence Day", date: "2026-08-15", religion: "All" },
+        { name: "Parsi New Year", date: "2026-08-15", religion: "All" },
         { name: "Milad un-Nabi", date: "2026-08-26", religion: "Muslim" },
+        { name: "Onam", date: "2026-08-26", religion: "Hindu" },
+        { name: "Raksha Bandhan", date: "2026-08-28", religion: "Hindu" },
         { name: "Janmashtami", date: "2026-09-04", religion: "Hindu" },
-        { name: "Gandhi Jayanti", date: "2026-10-02", religion: "All" },
+        { name: "Janmashtami (Smarta)", date: "2026-09-04", religion: "Hindu" },
+        { name: "Ganesh Chaturthi", date: "2026-09-14", religion: "Hindu" },
+        { name: "Mahatma Gandhi Jayanti", date: "2026-10-02", religion: "All" },
+        { name: "First Day of Sharad Navratri", date: "2026-10-11", religion: "Hindu" },
+        { name: "First Day of Durga Puja Festivities", date: "2026-10-17", religion: "Hindu" },
+        { name: "Maha Saptami", date: "2026-10-18", religion: "Hindu" },
+        { name: "Maha Ashtami", date: "2026-10-19", religion: "Hindu" },
         { name: "Dussehra", date: "2026-10-20", religion: "Hindu" },
-        { name: "Diwali", date: "2026-11-08", religion: "Hindu" },
+        { name: "Maharishi Valmiki Jayanti", date: "2026-10-26", religion: "Hindu" },
+        { name: "Karaka Chaturthi", date: "2026-10-29", religion: "Hindu" },
+        { name: "Diwali/Deepavali", date: "2026-11-08", religion: "Hindu" },
+        { name: "Naraka Chaturdasi", date: "2026-11-08", religion: "Hindu" },
+        { name: "Govardhan Puja", date: "2026-11-09", religion: "Hindu" },
+        { name: "Bhai Duj", date: "2026-11-11", religion: "Hindu" },
+        { name: "Chhat Puja", date: "2026-11-15", religion: "Hindu" },
         { name: "Guru Nanak Jayanti", date: "2026-11-24", religion: "Sikh" },
+        { name: "Guru Tegh Bahadur's Martyrdom Day", date: "2026-11-24", religion: "Sikh" },
+        { name: "Hazarat Ali's Birthday", date: "2026-12-23", religion: "Muslim" },
+        { name: "Christmas Eve", date: "2026-12-24", religion: "Christian" },
         { name: "Christmas", date: "2026-12-25", religion: "Christian" },
-        
+
         // 2027
         { name: "New Year's Day", date: "2027-01-01", religion: "All" },
         { name: "Makar Sankranti", date: "2027-01-14", religion: "Hindu" },
+        { name: "Guru Govind Singh Jayanti", date: "2027-01-15", religion: "Sikh" },
+        { name: "Pongal", date: "2027-01-15", religion: "Hindu" },
         { name: "Republic Day", date: "2027-01-26", religion: "All" },
         { name: "Ramadan Start", date: "2027-02-09", religion: "Muslim" },
+        { name: "Vasant Panchami", date: "2027-02-11", religion: "Hindu" },
+        { name: "Shivaji Jayanti", date: "2027-02-19", religion: "Hindu" },
+        { name: "Guru Ravidas Jayanti", date: "2027-02-20", religion: "Sikh" },
+        { name: "Maharishi Dayanand Saraswati Jayanti", date: "2027-03-02", religion: "Hindu" },
+        { name: "Jamat Ul-Vida", date: "2027-03-05", religion: "Muslim" },
         { name: "Maha Shivaratri", date: "2027-03-06", religion: "Hindu" },
         { name: "Ramzan Id", date: "2027-03-10", religion: "Muslim" },
         { name: "Holi", date: "2027-03-22", religion: "Hindu" },
+        { name: "Dolyatra", date: "2027-03-22", religion: "Hindu" },
+        { name: "Holika Dahana", date: "2027-03-22", religion: "Hindu" },
         { name: "Good Friday", date: "2027-03-26", religion: "Christian" },
+        { name: "Chaitra Sukhladi", date: "2027-04-07", religion: "Hindu" },
+        { name: "Cheti Chand", date: "2027-04-07", religion: "Sikh" },
+        { name: "Gudi Padwa", date: "2027-04-07", religion: "Hindu" },
+        { name: "Ugadi", date: "2027-04-07", religion: "Hindu" },
         { name: "Ambedkar Jayanti", date: "2027-04-14", religion: "All" },
+        { name: "Mesadi", date: "2027-04-14", religion: "Hindu" },
+        { name: "Vaisakhi", date: "2027-04-14", religion: "Sikh" },
+        { name: "Vishu", date: "2027-04-14", religion: "Hindu" },
         { name: "Rama Navami", date: "2027-04-15", religion: "Hindu" },
+        { name: "Bahag Bihu (Assam)", date: "2027-04-15", religion: "Hindu" },
+        { name: "Vaisakhadi (Bengal)", date: "2027-04-15", religion: "Hindu" },
         { name: "Mahavir Jayanti", date: "2027-04-19", religion: "Jain" },
+        { name: "Birthday of Rabindranath", date: "2027-05-09", religion: "All" },
         { name: "Bakrid", date: "2027-05-17", religion: "Muslim" },
         { name: "Buddha Purnima", date: "2027-05-20", religion: "Buddhist" },
-        { name: "Muharram", date: "2027-06-16", religion: "Muslim" },
+        { name: "Muharram/Ashura", date: "2027-06-16", religion: "Muslim" },
+        { name: "Rath Yatra", date: "2027-07-05", religion: "Hindu" },
         { name: "Independence Day", date: "2027-08-15", religion: "All" },
         { name: "Milad un-Nabi", date: "2027-08-15", religion: "Muslim" },
+        { name: "Parsi New Year", date: "2027-08-15", religion: "All" },
+        { name: "Raksha Bandhan", date: "2027-08-17", religion: "Hindu" },
         { name: "Janmashtami", date: "2027-08-25", religion: "Hindu" },
-        { name: "Gandhi Jayanti", date: "2027-10-02", religion: "All" },
+        { name: "Janmashtami (Smarta)", date: "2027-08-25", religion: "Hindu" },
+        { name: "Ganesh Chaturthi", date: "2027-09-04", religion: "Hindu" },
+        { name: "Onam", date: "2027-09-12", religion: "Hindu" },
+        { name: "First Day of Sharad Navratri", date: "2027-09-30", religion: "Hindu" },
+        { name: "Mahatma Gandhi Jayanti", date: "2027-10-02", religion: "All" },
+        { name: "First Day of Durga Puja Festivities", date: "2027-10-05", religion: "Hindu" },
+        { name: "Maha Saptami", date: "2027-10-06", religion: "Hindu" },
+        { name: "Maha Ashtami", date: "2027-10-07", religion: "Hindu" },
+        { name: "Maha Navami", date: "2027-10-08", religion: "Hindu" },
         { name: "Dussehra", date: "2027-10-09", religion: "Hindu" },
-        { name: "Diwali", date: "2027-10-29", religion: "Hindu" },
+        { name: "Maharishi Valmiki Jayanti", date: "2027-10-15", religion: "Hindu" },
+        { name: "Karaka Chaturthi", date: "2027-10-18", religion: "Hindu" },
+        { name: "Naraka Chaturdasi", date: "2027-10-28", religion: "Hindu" },
+        { name: "Diwali/Deepavali", date: "2027-10-29", religion: "Hindu" },
+        { name: "Govardhan Puja", date: "2027-10-30", religion: "Hindu" },
+        { name: "Bhai Duj", date: "2027-10-31", religion: "Hindu" },
+        { name: "Chhat Puja", date: "2027-11-04", religion: "Hindu" },
         { name: "Guru Nanak Jayanti", date: "2027-11-14", religion: "Sikh" },
+        { name: "Guru Tegh Bahadur's Martyrdom Day", date: "2027-11-24", religion: "Sikh" },
+        { name: "Hazarat Ali's Birthday", date: "2027-12-12", religion: "Muslim" },
+        { name: "Christmas Eve", date: "2027-12-24", religion: "Christian" },
         { name: "Christmas", date: "2027-12-25", religion: "Christian" },
-        
+
         // 2028
         { name: "New Year's Day", date: "2028-01-01", religion: "All" },
         { name: "Makar Sankranti", date: "2028-01-15", religion: "Hindu" },
+        { name: "Pongal", date: "2028-01-15", religion: "Hindu" },
         { name: "Republic Day", date: "2028-01-26", religion: "All" },
         { name: "Ramadan Start", date: "2028-01-29", religion: "Muslim" },
+        { name: "Vasant Panchami", date: "2028-01-31", religion: "Hindu" },
+        { name: "Shivaji Jayanti", date: "2028-02-19", religion: "Hindu" },
         { name: "Maha Shivaratri", date: "2028-02-23", religion: "Hindu" },
         { name: "Ramzan Id", date: "2028-02-27", religion: "Muslim" },
         { name: "Holi", date: "2028-03-11", religion: "Hindu" },
+        { name: "Gudi Padwa", date: "2028-03-27", religion: "Hindu" },
+        { name: "Ugadi", date: "2028-03-27", religion: "Hindu" },
         { name: "Rama Navami", date: "2028-04-03", religion: "Hindu" },
         { name: "Mahavir Jayanti", date: "2028-04-07", religion: "Jain" },
         { name: "Good Friday", date: "2028-04-14", religion: "Christian" },
         { name: "Ambedkar Jayanti", date: "2028-04-14", religion: "All" },
         { name: "Bakrid", date: "2028-05-06", religion: "Muslim" },
-        { name: "Muharram", date: "2028-06-04", religion: "Muslim" },
-        { name: "Independence Day", date: "2028-08-15", religion: "All" },
+        { name: "Muharram/Ashura", date: "2028-06-04", religion: "Muslim" },
+        { name: "Rath Yatra", date: "2028-06-24", religion: "Hindu" },
+        { name: "Raksha Bandhan", date: "2028-08-05", religion: "Hindu" },
         { name: "Janmashtami", date: "2028-08-13", religion: "Hindu" },
-        { name: "Gandhi Jayanti", date: "2028-10-02", religion: "All" },
+        { name: "Janmashtami (Smarta)", date: "2028-08-13", religion: "Hindu" },
+        { name: "Independence Day", date: "2028-08-15", religion: "All" },
+        { name: "Ganesh Chaturthi", date: "2028-08-23", religion: "Hindu" },
+        { name: "Onam", date: "2028-09-01", religion: "Hindu" },
+        { name: "First Day of Sharad Navratri", date: "2028-09-19", religion: "Hindu" },
+        { name: "First Day of Durga Puja Festivities", date: "2028-09-24", religion: "Hindu" },
         { name: "Dussehra", date: "2028-09-27", religion: "Hindu" },
-        { name: "Diwali", date: "2028-10-17", religion: "Hindu" },
+        { name: "Mahatma Gandhi Jayanti", date: "2028-10-02", religion: "All" },
+        { name: "Karaka Chaturthi", date: "2028-10-07", religion: "Hindu" },
+        { name: "Diwali/Deepavali", date: "2028-10-17", religion: "Hindu" },
+        { name: "Bhai Duj", date: "2028-10-19", religion: "Hindu" },
+        { name: "Chhat Puja", date: "2028-10-23", religion: "Hindu" },
+        { name: "Guru Tegh Bahadur's Martyrdom Day", date: "2028-11-24", religion: "Sikh" },
+        { name: "Hazarat Ali's Birthday", date: "2028-12-01", religion: "Muslim" },
+        { name: "Christmas Eve", date: "2028-12-24", religion: "Christian" },
         { name: "Christmas", date: "2028-12-25", religion: "Christian" },
 
         // 2029
         { name: "New Year's Day", date: "2029-01-01", religion: "All" },
         { name: "Makar Sankranti", date: "2029-01-14", religion: "Hindu" },
-        { name: "Republic Day", date: "2029-01-26", religion: "All" },
+        { name: "Pongal", date: "2029-01-14", religion: "Hindu" },
         { name: "Ramadan Start", date: "2029-01-17", religion: "Muslim" },
+        { name: "Vasant Panchami", date: "2029-01-19", religion: "Hindu" },
+        { name: "Republic Day", date: "2029-01-26", religion: "All" },
         { name: "Maha Shivaratri", date: "2029-02-11", religion: "Hindu" },
         { name: "Ramzan Id", date: "2029-02-15", religion: "Muslim" },
+        { name: "Shivaji Jayanti", date: "2029-02-19", religion: "Hindu" },
         { name: "Holi", date: "2029-03-01", religion: "Hindu" },
         { name: "Good Friday", date: "2029-03-30", religion: "Christian" },
         { name: "Ambedkar Jayanti", date: "2029-04-14", religion: "All" },
+        { name: "Gudi Padwa", date: "2029-04-14", religion: "Hindu" },
+        { name: "Ugadi", date: "2029-04-14", religion: "Hindu" },
         { name: "Rama Navami", date: "2029-04-22", religion: "Hindu" },
         { name: "Bakrid", date: "2029-04-25", religion: "Muslim" },
         { name: "Mahavir Jayanti", date: "2029-04-26", religion: "Jain" },
-        { name: "Muharram", date: "2029-05-25", religion: "Muslim" },
+        { name: "Muharram/Ashura", date: "2029-05-25", religion: "Muslim" },
+        { name: "Rath Yatra", date: "2029-07-13", religion: "Hindu" },
         { name: "Independence Day", date: "2029-08-15", religion: "All" },
+        { name: "Onam", date: "2029-08-22", religion: "Hindu" },
+        { name: "Raksha Bandhan", date: "2029-08-23", religion: "Hindu" },
         { name: "Janmashtami", date: "2029-09-01", religion: "Hindu" },
-        { name: "Gandhi Jayanti", date: "2029-10-02", religion: "All" },
+        { name: "Janmashtami (Smarta)", date: "2029-09-01", religion: "Hindu" },
+        { name: "Ganesh Chaturthi", date: "2029-09-11", religion: "Hindu" },
+        { name: "Mahatma Gandhi Jayanti", date: "2029-10-02", religion: "All" },
+        { name: "First Day of Sharad Navratri", date: "2029-10-08", religion: "Hindu" },
+        { name: "First Day of Durga Puja Festivities", date: "2029-10-12", religion: "Hindu" },
         { name: "Dussehra", date: "2029-10-16", religion: "Hindu" },
-        { name: "Diwali", date: "2029-11-05", religion: "Hindu" },
+        { name: "Karaka Chaturthi", date: "2029-10-26", religion: "Hindu" },
+        { name: "Diwali/Deepavali", date: "2029-11-05", religion: "Hindu" },
+        { name: "Bhai Duj", date: "2029-11-07", religion: "Hindu" },
+        { name: "Chhat Puja", date: "2029-11-11", religion: "Hindu" },
+        { name: "Hazarat Ali's Birthday", date: "2029-11-20", religion: "Muslim" },
+        { name: "Guru Tegh Bahadur's Martyrdom Day", date: "2029-11-24", religion: "Sikh" },
+        { name: "Christmas Eve", date: "2029-12-24", religion: "Christian" },
         { name: "Christmas", date: "2029-12-25", religion: "Christian" },
 
         // 2030
         { name: "New Year's Day", date: "2030-01-01", religion: "All" },
-        { name: "Makar Sankranti", date: "2030-01-14", religion: "Hindu" },
-        { name: "Republic Day", date: "2030-01-26", religion: "All" },
         { name: "Ramadan Start", date: "2030-01-06", religion: "Muslim" },
+        { name: "Makar Sankranti", date: "2030-01-14", religion: "Hindu" },
+        { name: "Pongal", date: "2030-01-14", religion: "Hindu" },
+        { name: "Republic Day", date: "2030-01-26", religion: "All" },
         { name: "Ramzan Id", date: "2030-02-05", religion: "Muslim" },
+        { name: "Vasant Panchami", date: "2030-02-07", religion: "Hindu" },
+        { name: "Shivaji Jayanti", date: "2030-02-19", religion: "Hindu" },
         { name: "Maha Shivaratri", date: "2030-03-02", religion: "Hindu" },
         { name: "Holi", date: "2030-03-20", religion: "Hindu" },
+        { name: "Gudi Padwa", date: "2030-04-03", religion: "Hindu" },
+        { name: "Ugadi", date: "2030-04-03", religion: "Hindu" },
         { name: "Rama Navami", date: "2030-04-12", religion: "Hindu" },
         { name: "Bakrid", date: "2030-04-14", religion: "Muslim" },
         { name: "Ambedkar Jayanti", date: "2030-04-14", religion: "All" },
         { name: "Mahavir Jayanti", date: "2030-04-16", religion: "Jain" },
         { name: "Good Friday", date: "2030-04-19", religion: "Christian" },
-        { name: "Muharram", date: "2030-05-14", religion: "Muslim" },
+        { name: "Muharram/Ashura", date: "2030-05-14", religion: "Muslim" },
+        { name: "Rath Yatra", date: "2030-07-02", religion: "Hindu" },
+        { name: "Raksha Bandhan", date: "2030-08-13", religion: "Hindu" },
         { name: "Independence Day", date: "2030-08-15", religion: "All" },
         { name: "Janmashtami", date: "2030-08-21", religion: "Hindu" },
-        { name: "Gandhi Jayanti", date: "2030-10-02", religion: "All" },
+        { name: "Janmashtami (Smarta)", date: "2030-08-21", religion: "Hindu" },
+        { name: "Ganesh Chaturthi", date: "2030-09-01", religion: "Hindu" },
+        { name: "Onam", date: "2030-09-09", religion: "Hindu" },
+        { name: "First Day of Sharad Navratri", date: "2030-09-28", religion: "Hindu" },
+        { name: "Mahatma Gandhi Jayanti", date: "2030-10-02", religion: "All" },
+        { name: "First Day of Durga Puja Festivities", date: "2030-10-02", religion: "Hindu" },
         { name: "Dussehra", date: "2030-10-06", religion: "Hindu" },
-        { name: "Diwali", date: "2030-10-26", religion: "Hindu" },
-        { name: "Christmas", date: "2030-12-25", religion: "Christian" }
+        { name: "Karaka Chaturthi", date: "2030-10-15", religion: "Hindu" },
+        { name: "Diwali/Deepavali", date: "2030-10-26", religion: "Hindu" },
+        { name: "Bhai Duj", date: "2030-10-28", religion: "Hindu" },
+        { name: "Chhat Puja", date: "2030-11-01", religion: "Hindu" },
+        { name: "Hazarat Ali's Birthday", date: "2030-11-10", religion: "Muslim" },
+        { name: "Guru Tegh Bahadur's Martyrdom Day", date: "2030-11-24", religion: "Sikh" },
+        { name: "Christmas Eve", date: "2030-12-24", religion: "Christian" },
+        { name: "Christmas", date: "2030-12-25", religion: "Christian" },
+        { name: "Ramadan Start", date: "2030-12-26", religion: "Muslim" }
     ];
 
     // ================= AUTH & DATA LOADING =================
@@ -356,7 +464,6 @@
             if (userDoc.exists && userDoc.data().religion) {
                 userData = userDoc.data();
                 await loadFestivals(); 
-                await loadNotes();
                 showMainScreen();
             } else {
                 document.getElementById("loginScreen").style.display = "none";
@@ -379,15 +486,6 @@
         } catch (e) {
             allFestivals = defaultFestivals;
         }
-    }
-
-    async function loadNotes() {
-        if(!currentUser) return;
-        try {
-            const snapshot = await db.collection("notes").where("userId", "==", currentUser.uid).get();
-            myNotes = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            renderNotes();
-        } catch (e) { console.log(e); }
     }
 
     // ================= LOGIN & SETUP =================
@@ -427,7 +525,6 @@
             });
             userData = { name, religion: selectedSetupReligion, dob };
             await loadFestivals();
-            await loadNotes();
             showMainScreen();
         } catch (e) { alert("Error: " + e.message); }
     };
@@ -440,9 +537,11 @@
 
         document.getElementById("userNameDisplay").innerText = userData.name || "Name";
 
+        // Apply Colors
         const theme = themes[userData.religion] || themes['Hindu'];
         document.documentElement.style.setProperty('--primary', theme.primary);
-        document.documentElement.style.setProperty('--primary-light', theme.light);
+        document.documentElement.style.setProperty('--secondary', theme.secondary);
+        document.documentElement.style.setProperty('--accent', theme.accent);
 
         renderCalendar();
     }
@@ -540,81 +639,6 @@
         }
         resultBox.style.display = "block";
     };
-
-    // ================= NOTES & ALARM =================
-    window.addNote = async function() {
-        const title = document.getElementById("noteTitle").value.trim();
-        const date = document.getElementById("noteDate").value;
-        const time = document.getElementById("noteTime").value;
-        if(!title || !date || !time) return alert("Please fill all fields!");
-
-        try {
-            await db.collection("notes").add({
-                userId: currentUser.uid,
-                title, date, time
-            });
-            document.getElementById("noteTitle").value = "";
-            document.getElementById("noteDate").value = "";
-            document.getElementById("noteTime").value = "";
-            loadNotes();
-        } catch (e) { alert("Error: " + e.message); }
-    };
-
-    window.deleteNote = async function(id) {
-        if(!confirm("Delete this note?")) return;
-        try {
-            await db.collection("notes").doc(id).delete();
-            loadNotes();
-        } catch (e) { alert(e.message); }
-    };
-
-    function renderNotes() {
-        const list = document.getElementById("notesList");
-        list.innerHTML = "";
-        if(myNotes.length === 0) {
-            list.innerHTML = "<p style='font-size:12px; color:#94a3b8;'>No notes yet.</p>";
-            return;
-        }
-        myNotes.forEach(n => {
-            list.innerHTML += `
-                <div class="note-item">
-                    <div class="info">
-                        <p>${n.title}</p>
-                        <span>📅 ${n.date} ⏰ ${n.time}</span>
-                    </div>
-                    <button class="note-del-btn" onclick="deleteNote('${n.id}')">✕</button>
-                </div>
-            `;
-        });
-    }
-
-    // Alarm Check (Every 10 seconds)
-    setInterval(() => {
-        const now = new Date();
-        const currentDate = now.toISOString().slice(0, 10);
-        const currentTime = now.toTimeString().slice(0, 5);
-
-        myNotes.forEach(n => {
-            if(n.date === currentDate && n.time === currentTime) {
-                if(!n.triggered) {
-                    n.triggered = true;
-                    document.getElementById("alarmText").innerText = n.title;
-                    document.getElementById("alarmModal").style.display = "flex";
-                    // Play Beep
-                    try {
-                        const ctx = new (window.AudioContext || window.webkitAudioContext)();
-                        const osc = ctx.createOscillator();
-                        osc.type = 'square';
-                        osc.frequency.value = 800;
-                        osc.connect(ctx.destination);
-                        osc.start();
-                        setTimeout(() => osc.stop(), 2000);
-                    } catch(e) {}
-                }
-            }
-        });
-    }, 10000);
-
 </script>
 
 </body>
